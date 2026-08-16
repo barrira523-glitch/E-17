@@ -2,23 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>E-17 SECURE ARCHIVE</title>
 
 <style>
 :root{
---bg:#030608;
---panel:#080d11;
---panel2:#0b1217;
---line:#1d2930;
---line2:#26353d;
---green:#42d987;
---green2:#24985d;
---text:#dce5ea;
---muted:#7d8991;
---dim:#536069;
---red:#ef5964;
---yellow:#d8bd5d;
+--bg:#030609;
+--bg2:#060b10;
+--panel:#080e14;
+--panel2:#0b1219;
+--line:#1d2a34;
+--line2:#263641;
+--green:#46d98a;
+--green2:#2b9e61;
+--text:#e3ebef;
+--muted:#7e8b94;
+--dim:#53616b;
+--red:#ff5964;
+--yellow:#d7c05b;
 }
 
 *{
@@ -30,13 +32,14 @@ html,body{
 margin:0;
 padding:0;
 min-height:100%;
-background:var(--bg);
+background:
+radial-gradient(circle at 50% -20%,#102019 0,#05090d 32%,#030609 70%);
 color:var(--text);
 font-family:
--apple-system,
-BlinkMacSystemFont,
 "SFMono-Regular",
+"Roboto Mono",
 Menlo,
+Monaco,
 Consolas,
 monospace;
 }
@@ -50,337 +53,309 @@ content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-z-index:999;
-background:repeating-linear-gradient(
+z-index:1000;
+opacity:.16;
+background:
+repeating-linear-gradient(
 to bottom,
-rgba(255,255,255,.018) 0,
-rgba(255,255,255,.018) 1px,
+rgba(255,255,255,.035) 0px,
+rgba(255,255,255,.035) 1px,
 transparent 1px,
 transparent 4px
 );
-opacity:.25;
 }
 
-body:after{
-content:"";
-position:fixed;
-width:650px;
-height:650px;
-left:50%;
-top:35%;
-transform:translate(-50%,-50%);
-background:radial-gradient(
-circle,
-rgba(45,220,130,.035),
-transparent 68%
-);
-pointer-events:none;
+button{
+font-family:inherit;
 }
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 #login{
 position:fixed;
 inset:0;
-z-index:5000;
-background:#030608;
+z-index:2000;
 display:flex;
 align-items:center;
 justify-content:center;
 padding:20px;
+background:#020406;
 }
 
 .login-box{
 width:100%;
-max-width:480px;
-border:1px solid var(--line2);
-background:linear-gradient(145deg,#0a1015,#05080b);
-padding:34px;
-box-shadow:0 30px 100px rgba(0,0,0,.7);
+max-width:500px;
+border:1px solid #26343d;
+background:#070c11;
+box-shadow:0 30px 100px #000;
+padding:35px;
+border-radius:12px;
 }
 
 .login-logo{
 font-size:27px;
-letter-spacing:4px;
+letter-spacing:3px;
 margin-bottom:5px;
 }
 
 .login-logo span{
 color:var(--green);
-font-weight:bold;
 }
 
-.login-class{
+.login-sub{
 font-size:9px;
-letter-spacing:2px;
-color:var(--green);
-margin-bottom:35px;
+color:var(--muted);
+letter-spacing:1px;
+line-height:1.7;
 }
 
-.login-title{
-font-size:13px;
+.login-label{
+display:block;
+font-size:9px;
+color:#8c9aa3;
+margin-top:28px;
 letter-spacing:1px;
 }
 
-.login-desc{
-font-size:9px;
-line-height:1.8;
-color:var(--muted);
-margin-top:10px;
-}
-
-.login-input{
+#password{
 width:100%;
-height:48px;
-margin-top:20px;
-background:#030608;
-border:1px solid var(--line2);
+height:52px;
+margin-top:9px;
+background:#020508;
+border:1px solid #35444e;
+border-radius:7px;
+padding:0 14px;
 color:white;
-padding:0 13px;
-font-family:monospace;
+font-family:inherit;
+font-size:13px;
 outline:none;
 }
 
-.login-input:focus{
+#password:focus{
 border-color:var(--green);
+box-shadow:0 0 0 2px rgba(70,217,138,.08);
 }
 
-.login-btn{
+.unlock{
 width:100%;
-height:47px;
-margin-top:10px;
-background:#0b2418;
-border:1px solid #287c51;
+height:50px;
+margin-top:12px;
+background:#0b2015;
+border:1px solid #2f9b61;
+border-radius:7px;
 color:var(--green);
-font-family:monospace;
 font-weight:bold;
-letter-spacing:1px;
 cursor:pointer;
+letter-spacing:1px;
 }
 
-.login-error{
+#loginError{
 height:20px;
 margin-top:10px;
 color:var(--red);
 font-size:9px;
 }
 
-.login-warning{
-margin-top:25px;
-padding-top:15px;
-border-top:1px solid var(--line);
-font-size:8px;
-line-height:1.7;
-color:var(--dim);
-}
-
-/* =========================
-   APP
-========================= */
+/* APP */
 
 #app{
 display:none;
 min-height:100vh;
 }
 
-.shell{
-display:grid;
-grid-template-columns:245px 1fr;
-min-height:100vh;
-}
-
-/* =========================
-   TOP
-========================= */
-
-.top{
-position:fixed;
-left:245px;
-right:0;
-top:0;
+.topbar{
 height:105px;
-z-index:100;
-border-bottom:1px solid var(--line);
-background:rgba(4,8,11,.96);
-backdrop-filter:blur(15px);
-}
-
-.top-inner{
-height:100%;
+border:1px solid var(--line);
+margin:18px 18px 0;
+border-radius:9px 9px 0 0;
+background:rgba(6,11,16,.96);
 display:flex;
 align-items:center;
-justify-content:space-between;
-padding:0 28px;
+padding:20px;
+position:relative;
 }
 
 .brand{
-font-size:27px;
-letter-spacing:3px;
+font-size:29px;
+letter-spacing:2px;
+white-space:nowrap;
 }
 
-.brand strong{
+.brand b{
 color:var(--green);
 }
 
-.subtitle{
-font-size:9px;
+.initiative{
+font-size:10px;
+color:#85929a;
+margin-top:5px;
 letter-spacing:1px;
-color:var(--muted);
-margin-top:4px;
 }
 
-.subtitle span{
+.initiative span{
 color:var(--green);
-}
-
-.top-right{
-display:flex;
-align-items:center;
-gap:28px;
 }
 
 .access{
-border:1px solid #287c51;
-padding:11px 25px;
+position:absolute;
+left:55%;
+transform:translateX(-50%);
+border:1px solid #25804f;
+border-radius:5px;
+padding:12px 30px;
 color:var(--green);
+font-size:12px;
 letter-spacing:1px;
-font-size:11px;
-background:#07150e;
+background:#07140d;
 }
 
 .top-status{
+margin-left:auto;
+text-align:right;
 font-size:9px;
+color:#8a959d;
 line-height:1.8;
-color:var(--muted);
 }
 
 .dot{
 color:var(--green);
-font-size:14px;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+/* LAYOUT */
+
+.layout{
+display:grid;
+grid-template-columns:245px 1fr;
+margin:0 18px 18px;
+border:1px solid var(--line);
+border-top:0;
+min-height:calc(100vh - 123px);
+}
 
 .sidebar{
-position:fixed;
-left:0;
-top:0;
-bottom:0;
-width:245px;
 border-right:1px solid var(--line);
-background:#05090c;
-padding:125px 12px 20px;
-overflow-y:auto;
+background:#050a0f;
+padding:20px 12px;
 }
 
-.nav-title{
+.side-title{
+font-size:10px;
 color:var(--green);
-font-size:9px;
 letter-spacing:1px;
-padding:10px 12px 15px;
+padding:0 10px 15px;
 }
 
-.nav-item{
+.nav{
 display:flex;
 align-items:center;
 gap:12px;
 padding:11px 12px;
-margin-bottom:2px;
-border:1px solid transparent;
+border-radius:6px;
+color:#aeb9bf;
 cursor:pointer;
-color:#aab5bc;
+font-size:10px;
+margin-bottom:3px;
 }
 
-.nav-item:hover{
-background:#0a1115;
+.nav:hover{
+background:#0c151b;
 }
 
-.nav-item.active{
-border-color:#287c51;
-background:#071710;
+.nav.active{
+border:1px solid #2c8f5c;
+background:#07180f;
 color:white;
 }
 
 .nav-icon{
-width:22px;
-font-size:17px;
-text-align:center;
+width:20px;
+font-size:16px;
 }
 
-.nav-name{
-font-size:11px;
+.folder-nav{
+font-size:10px;
 }
 
-.nav-desc{
-font-size:8px;
-color:var(--muted);
+.folder-nav small{
+display:block;
+margin-left:32px;
 margin-top:3px;
+color:#64727b;
+font-size:8px;
 }
 
-/* =========================
-   CONTENT
-========================= */
+.archive-info{
+border:1px solid var(--line);
+border-radius:6px;
+margin:30px 0 0;
+padding:12px;
+}
+
+.archive-info-title{
+color:var(--green);
+font-size:10px;
+margin-bottom:12px;
+}
+
+.info-row{
+display:flex;
+justify-content:space-between;
+border-top:1px solid #152029;
+padding:8px 0;
+font-size:8px;
+color:#76848d;
+}
+
+.info-row b{
+color:#c9d2d7;
+font-weight:normal;
+}
+
+/* CONTENT */
 
 .content{
-margin-left:245px;
-padding:130px 22px 30px;
-max-width:1400px;
-width:100%;
+padding:24px;
+overflow:hidden;
 }
 
-.panel{
+.overview-card{
 border:1px solid var(--line);
-background:linear-gradient(
-145deg,
-rgba(9,15,20,.96),
-rgba(4,8,11,.96)
-);
-margin-bottom:14px;
+background:
+radial-gradient(circle at 90% 10%,rgba(60,190,120,.06),transparent 35%),
+#080e14;
+border-radius:7px;
+padding:24px;
 }
 
-.hero{
-padding:25px;
-}
-
-.hero-top{
+.overview-head{
 display:flex;
+gap:22px;
 align-items:center;
-gap:25px;
 }
 
-.seal{
-width:100px;
-height:100px;
+.eagle{
+width:125px;
+height:125px;
 border-radius:50%;
-border:1px solid #27343c;
+border:1px solid #26343e;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:30px;
-color:var(--green);
-background:radial-gradient(
-circle,
-#152127,
-#070b0e
-);
-box-shadow:inset 0 0 30px rgba(0,0,0,.7);
+font-size:44px;
+background:#0a1118;
 }
 
-.hero-title{
-font-size:28px;
+.overview-title{
+font-size:27px;
 letter-spacing:2px;
 }
 
-.hero-desc{
-margin-top:9px;
-font-size:11px;
+.overview-description{
+font-size:12px;
+color:#89969e;
 line-height:1.8;
-color:var(--muted);
-max-width:700px;
+margin-top:9px;
+max-width:650px;
 }
 
 .stats{
@@ -391,97 +366,86 @@ margin-top:20px;
 }
 
 .stat{
-border:1px solid var(--line2);
+border:1px solid var(--line);
+background:#070d13;
 padding:14px;
-background:#070c10;
+border-radius:5px;
 }
 
-.stat-label{
+.stat label{
+display:block;
 font-size:8px;
-color:var(--muted);
+color:#76838c;
 }
 
-.stat-value{
-font-size:16px;
-margin-top:8px;
+.stat strong{
+display:block;
+font-size:15px;
+font-weight:normal;
+margin-top:7px;
 }
 
 .green{
-color:var(--green);
+color:var(--green)!important;
 }
 
-/* =========================
-   SECTION TITLE
-========================= */
+/* SECTION */
 
-.section-head{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:16px 20px 12px;
-border-bottom:1px solid var(--line);
+.section{
+border:1px solid var(--line);
+background:#070d13;
+border-radius:7px;
+margin-top:20px;
+padding:16px;
 }
 
 .section-title{
-font-size:13px;
+font-size:14px;
 color:var(--green);
 letter-spacing:1px;
+margin-bottom:15px;
 }
-
-.section-tools{
-font-size:9px;
-color:var(--muted);
-}
-
-/* =========================
-   FOLDERS
-========================= */
 
 .folder-grid{
-padding:18px;
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:12px;
+gap:10px;
 }
 
 .folder-card{
-border:1px solid var(--line2);
-padding:17px;
-min-height:112px;
+border:1px solid var(--line);
+background:#080f15;
+padding:15px;
+min-height:105px;
 cursor:pointer;
-background:linear-gradient(
-145deg,
-#0a1115,
-#060a0d
-);
+border-radius:5px;
 }
 
 .folder-card:hover{
-border-color:#3b7055;
-transform:translateY(-1px);
+border-color:#397455;
+background:#0b1518;
 }
 
 .folder-icon{
-font-size:30px;
+font-size:27px;
 color:var(--green);
-margin-bottom:12px;
+margin-bottom:9px;
 }
 
-.folder-name{
+.folder-card strong{
 font-size:11px;
-color:#e1e8ec;
+font-weight:normal;
+display:block;
 }
 
-.folder-desc{
+.folder-card small{
+display:block;
 font-size:8px;
-color:var(--muted);
-margin-top:6px;
-line-height:1.5;
+color:#68757e;
+margin-top:5px;
 }
 
-/* =========================
-   FILE TABLE
-========================= */
+/* RECENT */
 
 .file-table{
 width:100%;
@@ -492,295 +456,222 @@ border-collapse:collapse;
 text-align:left;
 font-size:8px;
 font-weight:normal;
-color:var(--muted);
-letter-spacing:1px;
-padding:11px 14px;
+color:#75828b;
+padding:8px 10px;
 border-bottom:1px solid var(--line);
 }
 
 .file-table td{
-padding:10px 14px;
-border-bottom:1px solid #111b20;
+padding:10px;
 font-size:9px;
+border-bottom:1px solid #121d24;
+color:#c5ced3;
 }
 
-.file-row{
+.file-table tr{
 cursor:pointer;
 }
 
-.file-row:hover{
-background:#0b1419;
-}
-
-.file-name{
-color:#d9e1e5;
-}
-
-.file-type{
-color:var(--muted);
-}
-
-.file-date{
-color:#71808a;
-}
-
-.file-icon{
-font-size:14px;
-color:#aeb8be;
-}
-
-/* =========================
-   ARCHIVE INFO
-========================= */
-
-.info{
-margin-top:18px;
-padding:14px;
-border:1px solid var(--line2);
-}
-
-.info-title{
-color:var(--green);
-font-size:9px;
-letter-spacing:1px;
-margin-bottom:12px;
-}
-
-.info-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-font-size:8px;
-}
-
-.info-row{
-display:flex;
-justify-content:space-between;
-border-bottom:1px solid #111a1f;
-padding:7px 0;
-}
-
-.info-key{
-color:var(--muted);
-}
-
-.info-value{
-color:#d3dce1;
-}
-
-/* =========================
-   VIEWER
-========================= */
-
-#viewer{
-display:none;
-}
-
-.viewer-box{
-padding:20px;
-}
-
-.back{
-color:var(--green);
-font-size:9px;
-cursor:pointer;
-margin-bottom:20px;
-}
-
-.file-path{
-color:var(--muted);
-font-size:8px;
-margin-bottom:10px;
-}
-
-.file-title{
-font-size:21px;
-margin-bottom:15px;
+.file-table tr:hover td{
+background:#0b151b;
 color:white;
 }
 
-.file-meta{
+.file-name{
+color:#dce5e9;
+}
+
+.file-icon{
+color:#a9b6bd;
+font-size:15px;
+}
+
+/* FILE VIEW */
+
+#fileView{
+display:none;
+}
+
+.back{
+border:1px solid var(--line2);
+background:#080e13;
+color:#a9b5bb;
+padding:9px 14px;
+border-radius:5px;
+cursor:pointer;
+font-family:inherit;
+font-size:9px;
+}
+
+.file-panel{
+border:1px solid var(--line);
+background:#070d13;
+margin-top:15px;
+border-radius:7px;
+padding:22px;
+}
+
+.file-header{
 display:flex;
-gap:20px;
-font-size:8px;
-color:var(--muted);
+justify-content:space-between;
 border-bottom:1px solid var(--line);
-padding-bottom:15px;
+padding-bottom:14px;
+}
+
+.file-header h1{
+font-size:18px;
+font-weight:normal;
+margin:0;
+}
+
+.verified{
+color:var(--green);
+font-size:8px;
 }
 
 .file-body{
-margin-top:20px;
 white-space:pre-wrap;
 font-size:10px;
-line-height:1.9;
-color:#cbd5db;
-background:#05090c;
-border:1px solid var(--line);
-padding:20px;
-min-height:400px;
-overflow:auto;
+line-height:1.8;
+color:#c5d0d6;
+margin-top:20px;
 }
 
 .redacted{
-color:var(--red);
+color:#777;
+background:#111;
+padding:1px 5px;
 }
 
 .warning{
 border-left:2px solid var(--yellow);
-padding:12px;
-margin-top:15px;
-background:#121108;
-color:#bcae68;
+background:#151308;
+color:#c7b967;
 font-size:8px;
 line-height:1.7;
+padding:12px;
+margin-top:25px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:900px){
 
-.shell{
+.topbar{
+height:auto;
+min-height:115px;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.access{
+position:static;
+transform:none;
+margin-left:auto;
+}
+
+.layout{
+grid-template-columns:190px 1fr;
+}
+
+.folder-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:650px){
+
+.topbar{
+margin:8px 8px 0;
+padding:14px;
+}
+
+.layout{
+margin:0 8px 8px;
 display:block;
 }
 
 .sidebar{
-position:relative;
-width:100%;
-height:auto;
-padding:10px;
 border-right:0;
 border-bottom:1px solid var(--line);
-display:flex;
-overflow-x:auto;
-gap:4px;
-}
-
-.nav-title{
-display:none;
-}
-
-.nav-item{
-min-width:150px;
-}
-
-.top{
-position:relative;
-left:0;
-height:auto;
-}
-
-.top-inner{
-padding:18px;
-gap:15px;
-}
-
-.top-right{
-gap:10px;
-}
-
-.access{
-display:none;
 }
 
 .content{
-margin-left:0;
-padding:20px 10px;
+padding:12px;
 }
 
-.folder-grid{
-grid-template-columns:repeat(2,1fr);
+.brand{
+font-size:19px;
 }
 
-.stats{
-grid-template-columns:repeat(2,1fr);
+.initiative{
+font-size:8px;
 }
 
-.hero-title{
-font-size:20px;
+.access{
+font-size:9px;
+padding:9px 15px;
 }
 
-.hero-top{
+.top-status{
+font-size:8px;
+}
+
+.overview-head{
 align-items:flex-start;
 }
 
-.seal{
-width:70px;
-height:70px;
-font-size:22px;
+.eagle{
+width:75px;
+height:75px;
+font-size:25px;
+flex-shrink:0;
 }
 
-.file-table{
-min-width:650px;
-}
-
-.panel{
-overflow-x:auto;
-}
-}
-
-@media(max-width:520px){
-
-.brand{
+.overview-title{
 font-size:18px;
 }
 
-.subtitle{
-font-size:7px;
+.overview-description{
+font-size:9px;
 }
 
 .folder-grid{
 grid-template-columns:1fr 1fr;
-gap:7px;
-padding:10px;
 }
 
 .folder-card{
-min-height:100px;
-padding:12px;
-}
-
-.folder-icon{
-font-size:23px;
-}
-
-.hero{
-padding:15px;
-}
-
-.stats{
-gap:5px;
-}
-
-.stat{
+min-height:95px;
 padding:10px;
 }
 
-.stat-value{
-font-size:13px;
+.folder-icon{
+font-size:22px;
 }
 
-.info-grid{
-grid-template-columns:1fr;
+.file-table th:nth-child(3),
+.file-table td:nth-child(3),
+.file-table th:nth-child(4),
+.file-table td:nth-child(4){
+display:none;
 }
 
 .login-box{
-padding:25px;
+padding:24px;
 }
 
-.login-logo{
-font-size:21px;
-}
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <div id="login">
 
@@ -790,249 +681,52 @@ font-size:21px;
 <span>E-17</span> SECURE ARCHIVE
 </div>
 
-<div class="login-class">
-ECLIPSE INITIATIVE // LEVEL OMEGA CLEARANCE
+<div class="login-sub">
+ECLIPSE INITIATIVE // LEVEL OMEGA CLEARANCE<br>
+ENCRYPTED FORENSIC STORAGE MEDIA
 </div>
 
-<div class="login-title">
-SECURE STORAGE AUTHENTICATION
-</div>
-
-<div class="login-desc">
-Encrypted forensic storage detected.<br>
-This archive contains restricted operational,
-financial and personnel records.
-</div>
+<label class="login-label">
+ARCHIVE ACCESS KEY
+</label>
 
 <input
 id="password"
-class="login-input"
 type="password"
-placeholder="ARCHIVE ACCESS KEY"
+placeholder="ENTER ACCESS KEY"
 autocomplete="off"
 >
 
-<button
-class="login-btn"
-onclick="unlock()">
-UNLOCK ARCHIVE
+<button class="unlock" onclick="unlock()">
+🔒 MOUNT SECURE ARCHIVE
 </button>
 
-<div id="loginError" class="login-error"></div>
-
-<div class="login-warning">
-WARNING: Unauthorized access attempts are logged.
-This interface is a fictional E-17 archive for the
-SECTOR 8 project.
-</div>
+<div id="loginError"></div>
 
 </div>
 
 </div>
 
 
-<!-- =========================
-     APPLICATION
-========================= -->
+<!-- APPLICATION -->
 
 <div id="app">
 
-<div class="shell">
-
-<!-- SIDEBAR -->
-
-<aside class="sidebar">
-
-<div class="nav-title">
-ARCHIVE NAVIGATION
-</div>
-
-<div
-class="nav-item active"
-onclick="showOverview()">
-<div class="nav-icon">⌂</div>
-<div>
-<div class="nav-name">OVERVIEW</div>
-<div class="nav-desc">Archive Overview</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('00_SYSTEM')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">00_SYSTEM</div>
-<div class="nav-desc">System Files</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('01_PROJECT')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">01_PROJECT</div>
-<div class="nav-desc">Eclipse Initiative</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('02_FINANCE')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">02_FINANCE</div>
-<div class="nav-desc">Financial Records</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('03_SUBJECTS')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">03_SUBJECTS</div>
-<div class="nav-desc">Subjects & Investigations</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('04_HALE')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">04_HALE</div>
-<div class="nav-desc">Victor Hale</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('05_CROSS')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">05_CROSS</div>
-<div class="nav-desc">Daniel Cross</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('06_INCIDENTS')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">06_INCIDENTS</div>
-<div class="nav-desc">Operations & Incidents</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('07_OBSERVATION')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">07_OBSERVATION</div>
-<div class="nav-desc">Surveillance & Analysis</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('08_BLACK_VEIL')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">08_BLACK_VEIL</div>
-<div class="nav-desc">Black Veil Files</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('09_PHASES')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">09_PHASES</div>
-<div class="nav-desc">Project Phases</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('10_FINAL')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">10_FINAL</div>
-<div class="nav-desc">Final Reports</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('11_PERSONNEL')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">11_PERSONNEL</div>
-<div class="nav-desc">Personnel Files</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('12_MEDIA')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">12_MEDIA</div>
-<div class="nav-desc">Images & Evidence</div>
-</div>
-</div>
-
-<div class="nav-item" onclick="openFolder('13_MISC')">
-<div class="nav-icon">■</div>
-<div>
-<div class="nav-name">13_MISC</div>
-<div class="nav-desc">Miscellaneous</div>
-</div>
-</div>
-
-<div class="info">
-
-<div class="info-title">
-ARCHIVE INFO
-</div>
-
-<div class="info-row">
-<span class="info-key">Archive ID</span>
-<span class="info-value">E-17</span>
-</div>
-
-<div class="info-row">
-<span class="info-key">Classification</span>
-<span class="info-value">TOP SECRET</span>
-</div>
-
-<div class="info-row">
-<span class="info-key">Security Level</span>
-<span class="info-value">OMEGA</span>
-</div>
-
-<div class="info-row">
-<span class="info-key">Access</span>
-<span class="info-value">READ ONLY</span>
-</div>
-
-<div class="info-row">
-<span class="info-key">User</span>
-<span class="info-value">AUTHORIZED</span>
-</div>
-
-<div class="info-row">
-<span class="info-key">Storage</span>
-<span class="info-value">FORENSIC SSD</span>
-</div>
-
-</div>
-
-</aside>
-
-
-<!-- TOP -->
-
-<header class="top">
-
-<div class="top-inner">
+<header class="topbar">
 
 <div>
-
 <div class="brand">
-<strong>E-17</strong> SECURE ARCHIVE
+<b>E-17</b> SECURE ARCHIVE
 </div>
 
-<div class="subtitle">
+<div class="initiative">
 ECLIPSE INITIATIVE //
 <span>LEVEL OMEGA CLEARANCE</span>
 </div>
-
 </div>
 
-<div class="top-right">
-
 <div class="access">
-♧ ACCESS GRANTED
+🔒 ACCESS GRANTED
 </div>
 
 <div class="top-status">
@@ -1040,39 +734,172 @@ ARCHIVE MOUNTED <span class="dot">●</span><br>
 READ ONLY MODE
 </div>
 
-</div>
-
-</div>
-
 </header>
 
 
-<!-- CONTENT -->
+<div class="layout">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="side-title">
+ARCHIVE NAVIGATION
+</div>
+
+<div class="nav active" onclick="showOverview()">
+<span class="nav-icon">⌂</span>
+OVERVIEW
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('00_SYSTEM')">
+<span class="nav-icon">▰</span>
+00_SYSTEM
+<small>System Files</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('01_PROJECT')">
+<span class="nav-icon">▰</span>
+01_PROJECT
+<small>Eclipse Initiative</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('02_FINANCE')">
+<span class="nav-icon">▰</span>
+02_FINANCE
+<small>Financial Records</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('03_SUBJECTS')">
+<span class="nav-icon">▰</span>
+03_SUBJECTS
+<small>Subjects & Operations</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('04_HALE')">
+<span class="nav-icon">▰</span>
+04_HALE
+<small>Victor Hale</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('05_CROSS')">
+<span class="nav-icon">▰</span>
+05_CROSS
+<small>Daniel Cross</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('06_INCIDENTS')">
+<span class="nav-icon">▰</span>
+06_INCIDENTS
+<small>Operations & Incidents</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('07_OBSERVATION')">
+<span class="nav-icon">▰</span>
+07_OBSERVATION
+<small>Surveillance & Analysis</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('08_BLACK_VEIL')">
+<span class="nav-icon">▰</span>
+08_BLACK_VEIL
+<small>Black Veil Files</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('09_PHASES')">
+<span class="nav-icon">▰</span>
+09_PHASES
+<small>Project Phases</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('10_FINAL')">
+<span class="nav-icon">▰</span>
+10_FINAL
+<small>Final Reports</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('11_PERSONNEL')">
+<span class="nav-icon">▰</span>
+11_PERSONNEL
+<small>Personnel Files</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('12_MEDIA')">
+<span class="nav-icon">▰</span>
+12_MEDIA
+<small>Images & Evidence</small>
+</div>
+
+<div class="nav folder-nav" onclick="openFolder('13_MISC')">
+<span class="nav-icon">▰</span>
+13_MISC
+<small>Miscellaneous</small>
+</div>
+
+
+<div class="archive-info">
+
+<div class="archive-info-title">
+ARCHIVE INFO
+</div>
+
+<div class="info-row">
+Archive ID <b>E-17</b>
+</div>
+
+<div class="info-row">
+Classification <b>TOP SECRET</b>
+</div>
+
+<div class="info-row">
+Security Level <b>OMEGA</b>
+</div>
+
+<div class="info-row">
+Access <b>READ ONLY</b>
+</div>
+
+<div class="info-row">
+User <b>AUTHORIZED</b>
+</div>
+
+<div class="info-row">
+Date <b>31 / 07 / 2025</b>
+</div>
+
+<div class="info-row">
+Time <b>19:19:00</b>
+</div>
+
+</div>
+
+</aside>
+
+
+<!-- MAIN -->
 
 <main class="content">
 
-<!-- OVERVIEW -->
-
 <div id="overview">
 
-<div class="panel hero">
+<div class="overview-card">
 
-<div class="hero-top">
+<div class="overview-head">
 
-<div class="seal">
-E-17
+<div class="eagle">
+🦅
 </div>
 
 <div>
 
-<div class="hero-title">
+<div class="overview-title">
 E-17 SECURE ARCHIVE
 </div>
 
-<div class="hero-desc">
-All files and records related to the Eclipse Initiative,
-its financial structures, corporate entities,
-political contacts, compromised officials,
+<div class="overview-description">
+All recovered files and records related to the
+Eclipse Initiative, its financial structure,
+political influence network, compromised officials,
 subjects, incidents and final phase.
 </div>
 
@@ -1080,26 +907,27 @@ subjects, incidents and final phase.
 
 </div>
 
+
 <div class="stats">
 
 <div class="stat">
-<div class="stat-label">TOTAL FILES</div>
-<div class="stat-value">127</div>
+<label>TOTAL FILES</label>
+<strong>127</strong>
 </div>
 
 <div class="stat">
-<div class="stat-label">TOTAL FOLDERS</div>
-<div class="stat-value">14</div>
+<label>TOTAL FOLDERS</label>
+<strong>14</strong>
 </div>
 
 <div class="stat">
-<div class="stat-label">LAST UPDATE</div>
-<div class="stat-value">31 / 07 / 2025</div>
+<label>LAST UPDATE</label>
+<strong>31 / 07 / 2025</strong>
 </div>
 
 <div class="stat">
-<div class="stat-label">STATUS</div>
-<div class="stat-value green">SECURE</div>
+<label>STATUS</label>
+<strong class="green">SECURE</strong>
 </div>
 
 </div>
@@ -1109,25 +937,53 @@ subjects, incidents and final phase.
 
 <!-- FOLDERS -->
 
-<div class="panel">
+<div class="section">
 
-<div class="section-head">
-<div class="section-title">FOLDERS</div>
-<div class="section-tools">▦ &nbsp; ☷</div>
+<div class="section-title">
+FOLDERS
 </div>
 
-<div class="folder-grid" id="folderGrid"></div>
+<div class="folder-grid">
 
+<script>
+const folders=[
+["00_SYSTEM","System Files"],
+["01_PROJECT","Eclipse Initiative"],
+["02_FINANCE","Financial Records"],
+["03_SUBJECTS","Subjects & Operations"],
+["04_HALE","Victor Hale"],
+["05_CROSS","Daniel Cross"],
+["06_INCIDENTS","Operations & Incidents"],
+["07_OBSERVATION","Surveillance & Analysis"],
+["08_BLACK_VEIL","Black Veil Files"],
+["09_PHASES","Project Phases"],
+["10_FINAL","Final Reports"],
+["11_PERSONNEL","Personnel Files"],
+["12_MEDIA","Images & Evidence"],
+["13_MISC","Miscellaneous"]
+];
+
+folders.forEach(f=>{
+document.write(`
+<div class="folder-card" onclick="openFolder('${f[0]}')">
+<div class="folder-icon">▰</div>
+<strong>${f[0]}</strong>
+<small>${f[1]}</small>
+</div>
+`);
+});
+</script>
+
+</div>
 </div>
 
 
 <!-- RECENT -->
 
-<div class="panel">
+<div class="section">
 
-<div class="section-head">
-<div class="section-title">RECENT FILES</div>
-<div class="section-tools">LATEST RECOVERED RECORDS</div>
+<div class="section-title">
+RECENT FILES
 </div>
 
 <table class="file-table">
@@ -1150,36 +1006,36 @@ subjects, incidents and final phase.
 </div>
 
 
-<!-- VIEWER -->
+<!-- FILE VIEW -->
 
-<div id="viewer">
+<div id="fileView">
 
-<div class="panel viewer-box">
+<button class="back" onclick="showOverview()">
+← BACK TO ARCHIVE
+</button>
 
-<div class="back" onclick="showOverview()">
-← RETURN TO ARCHIVE
-</div>
+<div class="file-panel">
 
-<div id="viewerPath" class="file-path">
-/E-17/
-</div>
+<div class="file-header">
 
-<div id="viewerTitle" class="file-title">
+<h1 id="fileTitle">
 FILE
+</h1>
+
+<div class="verified">
+VERIFIED // READ ONLY
 </div>
 
-<div class="file-meta">
-<span>CLASSIFICATION: BLACK</span>
-<span>STATUS: VERIFIED</span>
-<span>ACCESS: READ ONLY</span>
 </div>
 
-<div id="viewerBody" class="file-body"></div>
+<div id="fileBody" class="file-body"></div>
 
 <div class="warning">
-ARCHIVE NOTICE: This record is part of the fictional
-SECTOR 8 / E-17 archive. Some fields remain redacted
-or classified under OMEGA clearance.
+ARCHIVE NOTICE:<br>
+This record is part of the fictional E-17 / SECTOR 8 archive.
+Certain fields remain classified or redacted.
+Unauthorized reproduction of archive records is prohibited
+within the fictional scenario.
 </div>
 
 </div>
@@ -1195,95 +1051,33 @@ or classified under OMEGA clearance.
 
 <script>
 
-/* =====================================================
-   PASSWORD
-===================================================== */
+/* PASSWORD */
 
 const PASSWORD =
 "E17-SECURITY-ARCHIVE-8F3A-2026";
 
 
-/* =====================================================
-   FOLDERS
-===================================================== */
+/* ARCHIVE DATABASE
+   ALL ENTITIES ARE FICTIONAL
+*/
 
-const folders = {
+const FILES={
 
-"00_SYSTEM":{
-desc:"System Files"
-},
-
-"01_PROJECT":{
-desc:"Eclipse Initiative"
-},
-
-"02_FINANCE":{
-desc:"Financial Records"
-},
-
-"03_SUBJECTS":{
-desc:"Subjects & Investigations"
-},
-
-"04_HALE":{
-desc:"Victor Hale"
-},
-
-"05_CROSS":{
-desc:"Daniel Cross"
-},
-
-"06_INCIDENTS":{
-desc:"Operations & Incidents"
-},
-
-"07_OBSERVATION":{
-desc:"Surveillance & Analysis"
-},
-
-"08_BLACK_VEIL":{
-desc:"Black Veil Files"
-},
-
-"09_PHASES":{
-desc:"Project Phases"
-},
-
-"10_FINAL":{
-desc:"Final Reports"
-},
-
-"11_PERSONNEL":{
-desc:"Personnel Files"
-},
-
-"12_MEDIA":{
-desc:"Images & Evidence"
-},
-
-"13_MISC":{
-desc:"Miscellaneous"
-}
-
-};
-
-
-/* =====================================================
-   ARCHIVE FILES
-===================================================== */
-
-const files = [
-
-{
+"BOOT_NOTICE.txt":{
 folder:"00_SYSTEM",
-name:"BOOT_NOTICE.txt",
 type:"System",
 size:"1.2 KB",
-content:`
+text:`
 E-17 SECURE ARCHIVE
 
-ARCHIVE STATUS:
-MOUNTED
+SYSTEM BOOT NOTICE
+--------------------------------
+
+ARCHIVE ID:
+E-17
+
+CLASSIFICATION:
+TOP SECRET / OMEGA
 
 STORAGE:
 FORENSIC SSD
@@ -1291,109 +1085,77 @@ FORENSIC SSD
 MODE:
 READ ONLY
 
-CLASSIFICATION:
-TOP SECRET / OMEGA
-
---------------------------------
-
-This storage device was recovered
+The storage device was recovered
 during the E-17 extraction incident.
 
-The SSD contains operational,
-financial and personnel records
-linked to the Eclipse Initiative.
+The device contains financial,
+political and corporate intelligence
+connected to the Eclipse Initiative.
 
-Several sectors remain encrypted.
+Multiple sectors remain encrypted.
 
-AUTHORIZED ACCESS ONLY.
-
---------------------------------
-
-SYSTEM MESSAGE:
-
-If you are reading this file,
-the archive has successfully mounted.
+STATUS:
+ARCHIVE MOUNTED
 `
 },
 
-{
+"ECLIPSE_OVERVIEW.txt":{
 folder:"01_PROJECT",
-name:"ECLIPSE_OVERVIEW.txt",
 type:"Document",
 size:"4.7 KB",
-content:`
+text:`
 PROJECT ECLIPSE
-
-CLASSIFICATION:
-BLACK / OMEGA
+--------------------------------
 
 STATUS:
 ACTIVE
 
---------------------------------
+Eclipse is a distributed influence
+network operating through legitimate
+corporations, financial intermediaries,
+political contacts and private entities.
 
-Eclipse is not a conventional
-organization.
+PRIMARY STRUCTURE:
 
-It operates through a distributed
-network of financial entities,
-corporate structures,
-political contacts and information
-systems.
-
-No single company represents
-the complete structure.
-
-No single individual controls
-the entire network.
-
---------------------------------
-
-PRIMARY COMPONENTS:
-
-01 — FINANCE
-02 — CORPORATE STRUCTURES
+01 — FINANCIAL CONTROL
+02 — CORPORATE FRONT COMPANIES
 03 — POLITICAL INFLUENCE
 04 — INFORMATION CONTROL
-05 — OPERATIONAL CELLS
+05 — BLACKMAIL / LEVERAGE
 
---------------------------------
+No single company represents
+the entire organization.
+
+No single person controls
+the entire network.
 
 FINAL ARCHITECTURE:
 
 BLACK VEIL
 
 STATUS:
-RESTRICTED
+OMEGA
 `
 },
 
-{
+"H47_ROUTE.txt":{
 folder:"02_FINANCE",
-name:"H47_ROUTE.txt",
-type:"Financial Record",
+type:"Financial",
 size:"2.1 KB",
-content:`
-FINANCIAL ROUTE // H-47
-
-CLASSIFICATION:
-BLACK
-
+text:`
+FINANCIAL ROUTE H-47
 --------------------------------
 
 FRONT ENTITY:
-
 H-47 LOGISTICS
 
-Declared activity:
-Transport and logistics.
+DECLARED ACTIVITY:
+Transportation / Warehousing
 
-Observed activity:
-Financial routing.
+ACTUAL ACTIVITY:
+UNCONFIRMED FINANCIAL INTERMEDIARY
 
---------------------------------
-
-ROUTE:
+ROUTING:
 
 H-47 LOGISTICS
         ↓
@@ -1405,348 +1167,509 @@ HALE FOUNDATION
         ↓
 UNKNOWN DESTINATION
 
---------------------------------
-
-PATTERN:
-
-Repeated transactions.
-Multiple jurisdictions.
-Small individual amounts.
-High transaction frequency.
-
---------------------------------
-
-ASSESSMENT:
-
-STRUCTURED FINANCIAL
-OBFUSCATION
-
-CONFIDENCE:
-87%
-`
-},
-
-{
-folder:"02_FINANCE",
-name:"CORPORATE_NETWORK.txt",
-type:"Financial Record",
-size:"5.8 KB",
-content:`
-CORPORATE NETWORK
-
---------------------------------
-
-PRIMARY ENTITIES
-
-01
-H-47 LOGISTICS
-
-Role:
-Transportation / Front Entity
-
-Assessment:
-HIGH RISK
-
---------------------------------
-
-02
-MERIDIAN PROPERTY GROUP
-
-Role:
-Property Holding Company
-
-Assessment:
-FINANCIAL INTERMEDIARY
-
---------------------------------
-
-03
-NORTHSTAR CAPITAL
-
-Role:
-Investment Management
-
-Assessment:
-CENTRAL FINANCIAL NODE
-
---------------------------------
-
-04
-HALE FOUNDATION
-
-Role:
-Charitable Foundation
-
-Assessment:
-FUNDS ROUTING ENTITY
-
---------------------------------
-
-05
-ORION CONSULTING
-
-Role:
-Consultancy
-
-Assessment:
-INFORMATION / POLITICAL ACCESS
-
---------------------------------
-
-06
-BLACKSTONE MARITIME
-
-Role:
-Import / Export
-
-Assessment:
-SECONDARY ROUTING ENTITY
-
---------------------------------
-
-CONCLUSION:
-
-The companies appear legally
-independent.
-
-Operational evidence suggests
-common financial coordination.
-`
-},
-
-{
-folder:"02_FINANCE",
-name:"CORRUPTION_PATTERN.txt",
-type:"Financial Record",
-size:"3.9 KB",
-content:`
-FINANCIAL IRREGULARITIES
-
---------------------------------
-
-PATTERN IDENTIFIED:
-
-Company A
-    ↓
-Company B
-    ↓
-Company C
-    ↓
-Foundation
-    ↓
-Political intermediary
-    ↓
-UNKNOWN DESTINATION
-
---------------------------------
-
-OBSERVED CHARACTERISTICS:
+OBSERVED:
 
 • repeated transfers
-• intermediary companies
-• multiple jurisdictions
-• unclear commercial purpose
-• legitimate documentation
+• multiple intermediary companies
+• unusual frequency
 • inconsistent declared activity
-• political connections
-
---------------------------------
+• cross-border transactions
 
 ASSESSMENT:
 
-STRUCTURED FINANCIAL
-OBFUSCATION
+STRUCTURED FINANCIAL OBFUSCATION
 
 CONFIDENCE:
 87%
-
-NOTE:
-
-No single transaction provides
-sufficient evidence.
-
-The pattern becomes significant
-when the complete network is
-examined.
 `
 },
 
-{
+"CORRUPTION_NETWORK.txt":{
 folder:"02_FINANCE",
-name:"POLITICAL_PAYMENTS.txt",
-type:"Restricted",
-size:"6.4 KB",
-content:`
-POLITICAL PAYMENT INDEX
-
-CLASSIFICATION:
-OMEGA
-
+type:"Financial",
+size:"6.8 KB",
+text:`
+CORRUPTION NETWORK
 --------------------------------
 
-SUBJECT:
+PRIMARY FINANCIAL ENTITIES:
 
-Undisclosed political influence.
-
---------------------------------
-
-KNOWN ROUTES:
-
+H-47 LOGISTICS
+MERIDIAN PROPERTY GROUP
 NORTHSTAR CAPITAL
-        ↓
-ORION CONSULTING
-        ↓
-POLITICAL CONTACTS
-
---------------------------------
-
-RECORDED BENEFITS:
-
-• campaign consulting
-• property contracts
-• infrastructure tenders
-• advisory positions
-• private donations
-• offshore transfers
-
---------------------------------
+HALE FOUNDATION
+ORION PROCUREMENT
+BLACKSTONE CONSULTING
 
 IMPORTANT:
 
-The archive does not establish
-that every recipient was aware
-of the complete network.
+All entities are legally registered
+within the fictional scenario.
 
-Several payments were disguised
-as legitimate consulting fees.
+The network uses legitimate
+contracts to conceal transfers.
 
---------------------------------
+PATTERN:
 
-STATUS:
+GOVERNMENT CONTRACT
+        ↓
+ORION PROCUREMENT
+        ↓
+CONSULTING FEE
+        ↓
+MERIDIAN PROPERTY GROUP
+        ↓
+PRIVATE FOUNDATION
+        ↓
+OFFSHORE ACCOUNT
 
-PARTIALLY VERIFIED.
+ASSESSMENT:
+
+THE SYSTEM DOES NOT DEPEND
+ON ONE BANK OR ONE COMPANY.
+
+IT DEPENDS ON THE RELATIONSHIP
+BETWEEN THEM.
 `
 },
 
-{
+"POLITICAL_CONTACTS.txt":{
+folder:"02_FINANCE",
+type:"Political",
+size:"8.4 KB",
+text:`
+POLITICAL CONTACTS
+--------------------------------
+
+FICTIONAL ARCHIVE RECORD
+
+SUBJECT:
+POLITICAL INFLUENCE NETWORK
+
+POLITICIAN 01:
+MARCUS VAREL
+
+POSITION:
+MINISTER OF INFRASTRUCTURE
+
+STATUS:
+COMPROMISED
+
+KNOWN CONNECTION:
+ORION PROCUREMENT
+
+--------------------------------
+
+POLITICIAN 02:
+ADRIAN KESS
+
+POSITION:
+DEPUTY MINISTER OF FINANCE
+
+STATUS:
+UNDER INVESTIGATION
+
+KNOWN CONNECTION:
+NORTHSTAR CAPITAL
+
+--------------------------------
+
+POLITICIAN 03:
+ELIAS MORROW
+
+POSITION:
+PARLIAMENTARY COMMITTEE CHAIR
+
+STATUS:
+CONTROLLED ASSET
+
+KNOWN CONNECTION:
+HALE FOUNDATION
+
+--------------------------------
+
+POLITICIAN 04:
+VICTOR RANE
+
+POSITION:
+FORMER INTERIOR OFFICIAL
+
+STATUS:
+MISSING
+
+KNOWN CONNECTION:
+BLACK VEIL
+
+--------------------------------
+
+NOTE:
+
+The archive does not classify
+political subjects as members
+of Eclipse automatically.
+
+Some are financially compromised.
+
+Some are controlled through
+blackmail.
+
+Some are unaware of the
+complete structure.
+`
+},
+
+"CORRUPTED_OFFICIALS.txt":{
+folder:"02_FINANCE",
+type:"Political",
+size:"9.2 KB",
+text:`
+COMPROMISED OFFICIALS
+--------------------------------
+
+CASE 01
+
+MARCUS VAREL
+
+METHOD:
+Procurement manipulation
+
+BENEFIT:
+Political funding
+
+STATUS:
+COMPROMISED
+
+
+CASE 02
+
+ADRIAN KESS
+
+METHOD:
+Information leakage
+
+BENEFIT:
+Financial transfers
+
+STATUS:
+CONTROLLED
+
+
+CASE 03
+
+ELIAS MORROW
+
+METHOD:
+Committee influence
+
+BENEFIT:
+Private investment
+
+STATUS:
+CONTROLLED ASSET
+
+
+CASE 04
+
+[REDACTED]
+
+METHOD:
+[REDACTED]
+
+STATUS:
+OMEGA
+`
+},
+
+"SUBJECT_08.txt":{
 folder:"03_SUBJECTS",
-name:"SUBJECT_GROUP_08.txt",
 type:"Personnel",
 size:"3.8 KB",
-content:`
+text:`
 SUBJECT GROUP 08
-
 --------------------------------
 
 SUBJECT 01
 RAAD
-
 ROLE:
 COORDINATION
 
-STATUS:
-ACTIVE
-
---------------------------------
-
 SUBJECT 02
 NOAH
-
 ROLE:
 ANALYSIS
 
-STATUS:
-ACTIVE
-
---------------------------------
-
 SUBJECT 03
 YAZAN
-
 ROLE:
 TECHNICAL
 
-STATUS:
-ACTIVE
-
---------------------------------
-
 SUBJECT 04
 SAIF
-
 ROLE:
 SURVEILLANCE
 
-STATUS:
-ACTIVE
-
---------------------------------
-
 SUBJECT 05
 HAMZA
-
 ROLE:
 FIELD OPERATIONS
 
-STATUS:
-ACTIVE
-
---------------------------------
-
 SUBJECT 06
 KAIN
-
 ROLE:
 OPERATIONS
 
-STATUS:
-ACTIVE
-
---------------------------------
-
 SUBJECT 07
 MALIK
-
 ROLE:
 LOGISTICS
 
 STATUS:
 DECEASED
 
---------------------------------
-
 SUBJECT 08
-
 [REDACTED]
-
-STATUS:
-UNKNOWN
-
---------------------------------
 
 DIRECTIVE:
 
 OBSERVE.
+
 DO NOT ELIMINATE.
 
 EXCEPTION:
-
 MALIK
 
 REMOVE IF NECESSARY.
 `
 },
 
-{
-folder:"03_SUBJECTS",
-name:"SURVEILLANCE_LOG.txt",
+"VICTOR_HALE.txt":{
+folder:"04_HALE",
+type:"Personnel",
+size:"5.6 KB",
+text:`
+VICTOR HALE
+--------------------------------
+
+STATUS:
+CONTROLLED ASSET
+
+CLASSIFICATION:
+FINANCIAL NODE
+
+KNOWN ACTIVITIES:
+
+• investment management
+• corporate ownership
+• financial transfers
+• intermediary relationships
+
+Hale is not classified as a
+core Eclipse operative.
+
+He possesses partial knowledge
+of the network.
+
+PERSONAL LEVERAGE:
+
+Approximately four years ago,
+Hale received a threat involving
+a family member.
+
+Following the incident,
+financial instructions continued.
+
+FINAL ASSESSMENT:
+
+COMPLICIT THROUGH FEAR.
+
+NOT INNOCENT.
+
+NOT FULLY OPERATIVE.
+`
+},
+
+"HALE_COMPANIES.txt":{
+folder:"04_HALE",
+type:"Corporate",
+size:"7.1 KB",
+text:`
+HALE CORPORATE STRUCTURE
+--------------------------------
+
+VICTOR HALE
+        |
+        +-- NORTHSTAR CAPITAL
+        |
+        +-- MERIDIAN PROPERTY GROUP
+        |
+        +-- HALE FOUNDATION
+        |
+        +-- VANTAGE ASSET MANAGEMENT
+
+STATUS:
+
+NORTHSTAR:
+FINANCIAL NODE
+
+MERIDIAN:
+PROPERTY INTERMEDIARY
+
+HALE FOUNDATION:
+CHARITABLE FRONT
+
+VANTAGE:
+PRIVATE INVESTMENT VEHICLE
+
+IMPORTANT:
+
+Ownership records are fragmented
+across multiple jurisdictions.
+
+No single document proves
+complete control.
+
+Combined evidence indicates
+coordinated ownership.
+`
+},
+
+"DANIEL_CROSS.txt":{
+folder:"05_CROSS",
+type:"Document",
+size:"6.3 KB",
+text:`
+DANIEL CROSS
+--------------------------------
+
+POSITION:
+ACCOUNTING ANALYST
+
+STATUS:
+MISSING
+
+Cross discovered irregular
+financial relationships.
+
+He attempted to copy accounting
+records to a personal account.
+
+The attempt failed.
+
+SYSTEM LOG RETAINED:
+
+VICTOR HALE
+FINANCIAL OFFICE
+
+LAST MESSAGE:
+
+"If something happens to me,
+do not believe anyone who says
+Eclipse is only a financial project."
+
+STATUS:
+
+UNRESOLVED.
+`
+},
+
+"E17_EXTRACTION.txt":{
+folder:"06_INCIDENTS",
+type:"Incident",
+size:"7.9 KB",
+text:`
+INCIDENT E-17
+--------------------------------
+
+TIME:
+03:12
+
+LOCATION:
+FINANCIAL FACILITY
+
+OBJECTIVE:
+E-17 STORAGE UNIT
+
+RECOVERED:
+
+• encrypted SSD
+• document
+• three access cards
+• numeric list
+• metallic key
+
+INITIAL ASSUMPTION:
+
+MONEY.
+
+CORRECT ASSESSMENT:
+
+THE SSD.
+
+Two unidentified personnel
+entered the facility before
+standard police response.
+
+Their objective was E-17.
+
+NOT CASH.
+
+CONCLUSION:
+
+THE SSD WAS THE REAL TARGET.
+`
+},
+
+"MALIK_INCIDENT.txt":{
+folder:"06_INCIDENTS",
+type:"Incident",
+size:"5.9 KB",
+text:`
+MALIK INCIDENT
+--------------------------------
+
+STATUS:
+DECEASED
+
+SUBJECT GROUP 08 attempted
+server access.
+
+WARNING:
+
+"DO NOT TRUST THE DRIVER."
+
+Warning dismissed.
+
+Vehicle entered target area.
+
+Ambush occurred.
+
+The attack was directed
+primarily toward Malik.
+
+BACKGROUND:
+
+Malik previously worked for
+a transportation company later
+identified as an Eclipse front.
+
+He possessed a shipment number.
+
+That number remains relevant
+to the financial investigation.
+
+ASSESSMENT:
+
+MALIK HAD BEEN IDENTIFIED
+BEFORE THE INCIDENT.
+`
+},
+
+"SURVEILLANCE_LOG.txt":{
+folder:"07_OBSERVATION",
 type:"Surveillance",
-size:"4.1 KB",
-content:`
-SUBJECT GROUP 08
-
-OBSERVATION LOG
-
+size:"4.4 KB",
+text:`
+SURVEILLANCE LOG
 --------------------------------
 
 DAY 01
@@ -1759,7 +1682,7 @@ DAY 14
 Vehicle surveillance initiated.
 
 DAY 21
-H-47 identified by subjects.
+H-47 identified.
 
 DAY 37
 Victor Hale connection discovered.
@@ -1767,263 +1690,103 @@ Victor Hale connection discovered.
 DAY 44
 Partial Eclipse structure exposed.
 
---------------------------------
-
 ASSESSMENT:
 
 SUBJECT GROUP 08 CONTINUES
 TO INVESTIGATE.
 
 NO DIRECT INTERVENTION.
-
---------------------------------
-
-NOTE:
-
-Their investigation has reached
-financial and political nodes.
 `
 },
 
-{
-folder:"04_HALE",
-name:"VICTOR_HALE.txt",
-type:"Personnel",
-size:"5.6 KB",
-content:`
-VICTOR HALE
-
-STATUS:
-CONTROLLED ASSET
+"BLACK_VEIL_INDEX.txt":{
+folder:"08_BLACK_VEIL",
+type:"OMEGA",
+size:"2.6 KB",
+text:`
+BLACK VEIL
+--------------------------------
 
 CLASSIFICATION:
-FINANCIAL NODE
-
---------------------------------
-
-KNOWN ACTIVITIES:
-
-• investment management
-• corporate ownership
-• financial transfers
-• intermediary relationships
-• foundation management
-
---------------------------------
-
-ASSESSMENT:
-
-Hale is not classified
-as a direct Eclipse operative.
-
-He possesses partial knowledge
-of the network.
-
---------------------------------
-
-PERSONAL INCIDENT:
-
-Approximately four years ago,
-Hale received a threat involving
-a family member.
-
-Following the incident,
-financial instructions were
-continued without question.
-
---------------------------------
-
-FINAL ASSESSMENT:
-
-COMPLICIT THROUGH FEAR.
-
-NOT INNOCENT.
-NOT FULLY OPERATIVE.
-`
-},
-
-{
-folder:"05_CROSS",
-name:"DANIEL_CROSS.txt",
-type:"Personnel",
-size:"6.3 KB",
-content:`
-DANIEL CROSS
-
-POSITION:
-ACCOUNTING ANALYST
-
-STATUS:
-MISSING
-
---------------------------------
-
-Cross detected irregular
-financial relationships.
-
-He attempted to copy
-accounting records to a
-personal email account.
-
-The attempt failed.
-
-The system retained
-the access log.
-
---------------------------------
-
-LAST KNOWN ACCESS:
-
-VICTOR HALE
-FINANCIAL OFFICE
-
---------------------------------
-
-MESSAGE RECOVERED:
-
-"If something happens to me,
-do not believe anyone who says
-Eclipse is only a financial project."
-
---------------------------------
-
-STATUS:
-
-UNRESOLVED.
-`
-},
-
-{
-folder:"06_INCIDENTS",
-name:"E17_EXTRACTION.txt",
-type:"Incident",
-size:"7.9 KB",
-content:`
-INCIDENT E-17
-
---------------------------------
-
-TIME:
-03:12
-
-LOCATION:
-FINANCIAL FACILITY
+OMEGA
 
 OBJECTIVE:
-E-17 STORAGE UNIT
 
+Create dependency through:
+
+FINANCIAL INSTABILITY
++
+INFORMATION UNCERTAINTY
++
+POLITICAL DISTRUST
+
+=
+
+INSTITUTIONAL DEPENDENCY
+
+FINAL STAGE:
+
+ECLIPSE PRESENTS ITSELF
+AS THE SOLUTION.
+
+IMPLEMENTATION:
+
+LOCKED.
+`
+},
+
+"BLACK_VEIL_NETWORK.txt":{
+folder:"08_BLACK_VEIL",
+type:"OMEGA",
+size:"8.2 KB",
+text:`
+BLACK VEIL NETWORK
 --------------------------------
 
-RECOVERED ITEMS:
+PRIMARY TARGETS:
 
-• encrypted SSD
-• document
-• three access cards
-• numeric list
-• metallic key
+FINANCE
+GOVERNMENT
+CORPORATE STRUCTURES
+INFORMATION SYSTEMS
 
---------------------------------
+METHOD:
+
+Create dependency.
+
+Acquire information.
+
+Control access.
+
+Influence decisions.
 
 IMPORTANT:
 
-The extraction team believed
-the primary objective was money.
+The system is distributed.
 
-Assessment indicates otherwise.
+Failure of one company
+does not terminate the project.
 
---------------------------------
+Failure of one politician
+does not terminate the project.
 
-SECONDARY RESPONSE:
+Failure of one financial node
+does not terminate the project.
 
-Two unidentified personnel
-entered the facility before
-standard police response.
-
-Objective:
-
-E-17.
-
-NOT CASH.
-
---------------------------------
-
-CONCLUSION:
-
-THE SSD WAS THE REAL TARGET.
+PROJECT CONTINUES.
 `
 },
 
-{
-folder:"06_INCIDENTS",
-name:"MALIK_INCIDENT.txt",
-type:"Incident",
-size:"5.2 KB",
-content:`
-INCIDENT:
-MALIK
-
-STATUS:
-DECEASED
-
---------------------------------
-
-SUBJECT GROUP 08 attempted
-server access.
-
-Warning received:
-
-"DO NOT TRUST THE DRIVER."
-
-Warning was dismissed.
-
-Vehicle entered the target area.
-
-Ambush occurred.
-
-The attack was directed
-primarily toward Malik.
-
---------------------------------
-
-BACKGROUND:
-
-Malik previously worked
-for a transportation company.
-
-The company was later
-identified as an Eclipse
-front entity.
-
---------------------------------
-
-MALIK HAD RECORDED:
-
-A shipment number.
-
-The record was stored
-on an old mobile device.
-
---------------------------------
-
-ASSESSMENT:
-
-MALIK WAS IDENTIFIED
-BEFORE THE INCIDENT.
-`
-},
-
-{
-folder:"07_OBSERVATION",
-name:"PHASE_ONE.txt",
-type:"Surveillance",
+"PHASE_ONE.txt":{
+folder:"09_PHASES",
+type:"Phase",
 size:"4.2 KB",
-content:`
+text:`
 PHASE ONE
+--------------------------------
 
 STATUS:
 COMPLETED
-
---------------------------------
 
 OBJECTIVE:
 
@@ -2037,466 +1800,58 @@ Measure their ability to:
 • locate information
 • expose weaknesses
 
---------------------------------
-
 RESULT:
 
 SUBJECT GROUP 08 SUCCESSFULLY
 IDENTIFIED MULTIPLE STRUCTURAL
 WEAKNESSES.
 
---------------------------------
-
 FINAL ASSESSMENT:
 
 PASS.
-
---------------------------------
 
 NOTE:
 
 The subjects believe they
 stole E-17.
 
-They did not.
+THEY DID NOT.
 
-E-17 was deliberately
-allowed to leave secure custody.
+E-17 WAS DELIBERATELY
+ALLOWED TO LEAVE SECURE CUSTODY.
 `
 },
 
-{
-folder:"07_OBSERVATION",
-name:"CAMERA_RECORDS.txt",
-type:"Surveillance",
-size:"3.7 KB",
-content:`
-SURVEILLANCE RECORD
-
-SOURCE:
-CITY ONE SECURITY NETWORK
-
---------------------------------
-
-AVAILABLE DATA:
-
-• camera positions
-• movement patterns
-• vehicle routes
-• subject faces
-• entry times
-• exit times
-
---------------------------------
-
-ARCHIVE NOTE:
-
-SUBJECT GROUP 08 WAS OBSERVED
-BEFORE THEY KNEW THEY WERE
-BEING OBSERVED.
-
---------------------------------
-
-QUESTION:
-
-WHO AUTHORIZED THE OPERATION?
-
-ANSWER:
-
-ARCHITECTS.
-`
-},
-
-{
-folder:"08_BLACK_VEIL",
-name:"INDEX.txt",
-type:"Restricted",
-size:"2.6 KB",
-content:`
-BLACK VEIL
-
-CLASSIFICATION:
-OMEGA
-
-STATUS:
-DEVELOPMENT
-
---------------------------------
-
-OBJECTIVE:
-
-Create a global environment
-of uncertainty and dependency.
-
-Not mass destruction.
-
-Not conventional warfare.
-
-DEPENDENCY.
-
---------------------------------
-
-MODEL:
-
-Financial instability
-+
-Information uncertainty
-+
-Political distrust
-=
-Institutional dependency
-
---------------------------------
-
-FINAL STAGE:
-
-ECLIPSE PRESENTS ITSELF
-AS THE SOLUTION.
-
---------------------------------
-
-IMPLEMENTATION DATA:
-
-LOCKED.
-`
-},
-
-{
-folder:"08_BLACK_VEIL",
-name:"CORRUPTION_NETWORK.txt",
-type:"Restricted",
-size:"5.7 KB",
-content:`
-INFLUENCE NETWORK
-
---------------------------------
-
-TARGET AREAS:
-
-FINANCE
-GOVERNMENT
-CORPORATE STRUCTURES
-INFORMATION SYSTEMS
-
---------------------------------
-
-METHOD:
-
-Create dependency.
-
-Acquire information.
-
-Control access.
-
-Influence decisions.
-
---------------------------------
-
-POLITICAL ACCESS:
-
-ORION CONSULTING
-        ↓
-PRIVATE ADVISORS
-        ↓
-MINISTERIAL CONTACTS
-        ↓
-PROCUREMENT OFFICES
-
---------------------------------
-
-IMPORTANT:
-
-No single event is sufficient
-to expose the entire network.
-
-The system is distributed.
-
---------------------------------
-
-FAILURE OF ONE NODE:
-
-PROJECT CONTINUES.
-`
-},
-
-{
-folder:"08_BLACK_VEIL",
-name:"POLITICAL_CONTACTS.txt",
-type:"OMEGA",
-size:"8.2 KB",
-content:`
-POLITICAL CONTACT INDEX
-
-ALL IDENTITIES ARE FICTIONAL
-AND EXIST ONLY WITHIN THE
-SECTOR 8 STORY UNIVERSE.
-
---------------------------------
-
-SUBJECT:
-ADRIAN VOSS
-
-POSITION:
-MINISTERIAL PROCUREMENT OFFICIAL
-
-STATUS:
-COMPROMISED
-
-KNOWN CONNECTION:
-ORION CONSULTING
-
-OBSERVED BENEFIT:
-PROPERTY CONTRACTS
-
---------------------------------
-
-SUBJECT:
-ELIAS MERCER
-
-POSITION:
-SENIOR GOVERNMENT ADVISOR
-
-STATUS:
-UNDER INVESTIGATION
-
-KNOWN CONNECTION:
-NORTHSTAR CAPITAL
-
-OBSERVED BENEFIT:
-PRIVATE CONSULTING PAYMENTS
-
---------------------------------
-
-SUBJECT:
-MARA VALE
-
-POSITION:
-REGIONAL POLITICAL FIGURE
-
-STATUS:
-COMPROMISED
-
-KNOWN CONNECTION:
-HALE FOUNDATION
-
-OBSERVED BENEFIT:
-CAMPAIGN CONTRIBUTIONS
-
---------------------------------
-
-SUBJECT:
-JULIAN KERR
-
-POSITION:
-PUBLIC INFRASTRUCTURE DIRECTOR
-
-STATUS:
-SUSPECTED
-
-KNOWN CONNECTION:
-H-47 LOGISTICS
-
-OBSERVED BENEFIT:
-CONTRACT PREFERENTIAL ACCESS
-
---------------------------------
-
-ASSESSMENT:
-
-The political contacts do not
-appear to form one independent
-organization.
-
-They function as access points
-within legitimate institutions.
-
---------------------------------
-
-EVIDENCE STATUS:
-
-PARTIAL.
-`
-},
-
-{
-folder:"08_BLACK_VEIL",
-name:"COMPANIES_OF_INTEREST.txt",
-type:"Corporate",
-size:"9.1 KB",
-content:`
-COMPANIES OF INTEREST
-
---------------------------------
-
-H-47 LOGISTICS
-
-ROLE:
-TRANSPORT / FRONT ENTITY
-
-RISK:
-CRITICAL
-
---------------------------------
-
-MERIDIAN PROPERTY GROUP
-
-ROLE:
-PROPERTY HOLDING
-
-RISK:
-HIGH
-
---------------------------------
-
-NORTHSTAR CAPITAL
-
-ROLE:
-FINANCIAL NODE
-
-RISK:
-CRITICAL
-
---------------------------------
-
-HALE FOUNDATION
-
-ROLE:
-CHARITABLE / FUND ROUTING
-
-RISK:
-HIGH
-
---------------------------------
-
-ORION CONSULTING
-
-ROLE:
-POLITICAL ACCESS
-
-RISK:
-CRITICAL
-
---------------------------------
-
-BLACKSTONE MARITIME
-
-ROLE:
-IMPORT / EXPORT
-
-RISK:
-HIGH
-
---------------------------------
-
-VANTAGE SECURITY
-
-ROLE:
-PRIVATE SECURITY
-
-RISK:
-MEDIUM / HIGH
-
---------------------------------
-
-ARCADIA DATA SYSTEMS
-
-ROLE:
-INFORMATION SERVICES
-
-RISK:
-CRITICAL
-
---------------------------------
-
-ASSESSMENT:
-
-Several entities maintain
-apparently legitimate commercial
-operations.
-
-Their relationships become
-suspicious when financial,
-political and operational data
-are correlated.
-`
-},
-
-{
+"PHASE_TWO.txt":{
 folder:"09_PHASES",
-name:"PHASE_ONE.txt",
-type:"Project Phase",
-size:"4.2 KB",
-content:`
-PHASE ONE
-
-STATUS:
-COMPLETE
-
-OBJECTIVE:
-OBSERVATION
-
-RESULT:
-SUBJECT GROUP 08 PASSED
-INITIAL ASSESSMENT.
-
---------------------------------
-
-PHASE ONE CREATED:
-
-• controlled exposure
-• financial trails
-• limited intelligence leaks
-• indirect pressure
-
---------------------------------
-
-RESULT:
-
-SUBJECTS DISCOVERED
-MORE THAN EXPECTED.
-`
-},
-
-{
-folder:"09_PHASES",
-name:"PHASE_TWO.txt",
-type:"Project Phase",
+type:"Phase",
 size:"4.8 KB",
-content:`
+text:`
 PHASE TWO
+--------------------------------
 
 STATUS:
 ACTIVE
-
---------------------------------
 
 PRIMARY OBJECTIVE:
 
 RETURN SUBJECT GROUP 08
 TO CITY ONE.
 
---------------------------------
-
 DIRECTIVE:
 
 DO NOT ELIMINATE
 SUBJECT GROUP 08.
-
---------------------------------
 
 REASON:
 
 Their investigation remains
 valuable.
 
---------------------------------
-
 SECONDARY OBJECTIVE:
 
 Determine whether subjects
 understand their true role.
-
---------------------------------
 
 STATUS:
 
@@ -2504,14 +1859,12 @@ MONITORING.
 `
 },
 
-{
+"FINAL_NOTICE.txt":{
 folder:"10_FINAL",
-name:"FINAL_NOTICE.txt",
-type:"Final Report",
+type:"Final",
 size:"1.8 KB",
-content:`
-FINAL MESSAGE
-
+text:`
+FINAL NOTICE
 --------------------------------
 
 You believe you stole E-17.
@@ -2526,62 +1879,30 @@ You were measured.
 
 You were tested.
 
---------------------------------
-
 MALIK'S DEATH:
 
 UNEXPECTED.
 
 BUT USEFUL.
 
---------------------------------
-
 PHASE ONE:
 
 COMPLETE.
-
---------------------------------
 
 PHASE TWO:
 
 BEGINNING.
 
---------------------------------
-
 END OF AVAILABLE ARCHIVE.
 `
 },
 
-{
-folder:"10_FINAL",
-name:"BLACK_SCREEN.txt",
-type:"Final Report",
-size:"1.1 KB",
-content:`
-SECTOR 8
-
---------------------------------
-
-PHASE TWO HAS BEGUN.
-
---------------------------------
-
-[ CONNECTION TERMINATED ]
-
-[ SIGNAL LOST ]
-
-[ ARCHIVE CLOSED ]
-`
-},
-
-{
+"PERSONNEL_INDEX.txt":{
 folder:"11_PERSONNEL",
-name:"PERSONNEL_INDEX.txt",
 type:"Personnel",
-size:"5.1 KB",
-content:`
+size:"3.1 KB",
+text:`
 PERSONNEL INDEX
-
 --------------------------------
 
 RAAD
@@ -2604,322 +1925,176 @@ OPERATIONS
 
 MALIK
 LOGISTICS
-STATUS: DECEASED
+DECEASED
 
 VICTOR HALE
 FINANCIAL NODE
 
 DANIEL CROSS
 ACCOUNTING ANALYST
-STATUS: MISSING
+MISSING
 
---------------------------------
+MARCUS VAREL
+POLITICAL CONTACT
 
-OTHER PERSONNEL:
+ADRIAN KESS
+POLITICAL CONTACT
 
-[REDACTED]
+ELIAS MORROW
+POLITICAL CONTACT
 
-[REDACTED]
-
-[REDACTED]
-
---------------------------------
-
-CLEARANCE:
-OMEGA
+[OMEGA SUBJECT]
+REDACTED
 `
 },
 
-{
-folder:"11_PERSONNEL",
-name:"ARCHITECTS.txt",
-type:"Restricted",
-size:"3.4 KB",
-content:`
-ARCHITECTS
-
-IDENTITIES:
-
-[REDACTED]
-
-[REDACTED]
-
-[REDACTED]
-
---------------------------------
-
-KNOWN CHARACTERISTICS:
-
-• distributed command
-• compartmentalized information
-• no public hierarchy
-• financial intermediaries
-• political access
-
---------------------------------
-
-DIRECT CONTACT:
-
-NONE VERIFIED.
-
-`
-},
-
-{
+"EVIDENCE_INDEX.txt":{
 folder:"12_MEDIA",
-name:"MEDIA_INDEX.txt",
 type:"Evidence",
-size:"2.4 KB",
-content:`
-MEDIA EVIDENCE INDEX
-
+size:"3.7 KB",
+text:`
+EVIDENCE INDEX
 --------------------------------
 
-MEDIA-001
-CITY ONE SECURITY CAMERA
+E-17 SSD
+STATUS:
+RECOVERED
 
-MEDIA-002
-H-47 VEHICLE RECORD
+ACCESS CARD 01
+STATUS:
+VERIFIED
 
-MEDIA-003
-FINANCIAL OFFICE IMAGE
+ACCESS CARD 02
+STATUS:
+VERIFIED
 
-MEDIA-004
-NORTHSTAR MEETING
+ACCESS CARD 03
+STATUS:
+DAMAGED
 
-MEDIA-005
-ORION CONSULTING OFFICE
+METALLIC KEY
+STATUS:
+UNKNOWN
 
-MEDIA-006
-MALIK DEVICE RECOVERY
+NUMERIC LIST
+STATUS:
+PARTIALLY DECRYPTED
 
-MEDIA-007
-E-17 EXTRACTION
+CAMERA RECORDS
+STATUS:
+RECOVERED
 
---------------------------------
-
-MEDIA FILES:
-
-ENCRYPTED.
-
-THUMBNAILS:
-AVAILABLE.
-
-ORIGINALS:
-OMEGA LOCKED.
+FINANCIAL DOCUMENTS
+STATUS:
+RECOVERED
 `
 },
 
-{
+"ARCHIVE_INDEX.txt":{
 folder:"13_MISC",
-name:"RECOVERY_NOTES.txt",
-type:"Miscellaneous",
-size:"2.9 KB",
-content:`
-RECOVERY NOTES
-
+type:"Index",
+size:"2.6 KB",
+text:`
+ARCHIVE MASTER INDEX
 --------------------------------
 
-SSD CONDITION:
+E-17
+ECLIPSE INITIATIVE
+BLACK VEIL
 
-87% RECOVERED
+FINANCIAL NODES:
+H-47 LOGISTICS
+NORTHSTAR CAPITAL
+MERIDIAN PROPERTY GROUP
+HALE FOUNDATION
+ORION PROCUREMENT
 
---------------------------------
+POLITICAL CONTACTS:
+MARCUS VAREL
+ADRIAN KESS
+ELIAS MORROW
+VICTOR RANE
 
-RECOVERED SECTORS:
+PRIMARY SUBJECTS:
+SUBJECT GROUP 08
+VICTOR HALE
+DANIEL CROSS
+MALIK
 
-SYSTEM
-FINANCE
-PERSONNEL
-POLITICAL
-CORPORATE
-OBSERVATION
-INCIDENTS
+CURRENT STATUS:
 
---------------------------------
+ARCHIVE MOUNTED
 
-UNRECOVERED:
-
-SECTOR 8
-SECTOR 12
-SECTOR 17
-
---------------------------------
-
-WARNING:
-
-Additional records may exist
-outside the currently mounted
-archive.
-
---------------------------------
-
-STATUS:
-
-READ ONLY.
+PHASE TWO ACTIVE
 `
 }
 
-];
-
-
-/* =====================================================
-   BUILD FOLDER GRID
-===================================================== */
-
-function buildFolders(){
-
-const grid =
-document.getElementById("folderGrid");
-
-grid.innerHTML="";
-
-Object.entries(folders).forEach(
-([name,data])=>{
-
-const card =
-document.createElement("div");
-
-card.className="folder-card";
-
-card.onclick=()=>{
-openFolder(name);
 };
 
-card.innerHTML=`
-<div class="folder-icon">▰</div>
-<div class="folder-name">${name}</div>
-<div class="folder-desc">${data.desc}</div>
-`;
 
-grid.appendChild(card);
+/* BUILD RECENT FILES */
 
-});
-
-}
-
-
-/* =====================================================
-   RECENT FILES
-===================================================== */
+const recent=[
+"BOOT_NOTICE.txt",
+"ECLIPSE_OVERVIEW.txt",
+"H47_ROUTE.txt",
+"CORRUPTION_NETWORK.txt",
+"POLITICAL_CONTACTS.txt",
+"SUBJECT_08.txt",
+"VICTOR_HALE.txt",
+"DANIEL_CROSS.txt",
+"E17_EXTRACTION.txt",
+"PHASE_ONE.txt",
+"BLACK_VEIL_INDEX.txt",
+"FINAL_NOTICE.txt"
+];
 
 function buildRecent(){
 
-const body =
-document.getElementById("recentFiles");
+const table=document.getElementById("recentFiles");
 
-body.innerHTML="";
+table.innerHTML="";
 
-files.slice(0,10).forEach(file=>{
+recent.forEach(name=>{
 
-const row =
-document.createElement("tr");
+const f=FILES[name];
 
-row.className="file-row";
+const tr=document.createElement("tr");
 
-row.onclick=()=>{
-openFile(file);
-};
-
-row.innerHTML=`
+tr.innerHTML=`
 <td>
-<span class="file-icon">▣</span>
-&nbsp;
-<span class="file-name">${file.name}</span>
+<span class="file-icon">▱</span>
+<span class="file-name">${name}</span>
 </td>
-<td class="file-type">${file.type}</td>
-<td class="file-date">${file.size}</td>
-<td class="file-date">31 / 07 / 2025</td>
+<td>${f.type}</td>
+<td>${f.size}</td>
+<td>31 / 07 / 2025</td>
 `;
 
-body.appendChild(row);
+tr.onclick=()=>openFile(name);
+
+table.appendChild(tr);
 
 });
 
 }
 
 
-/* =====================================================
-   OPEN FOLDER
-===================================================== */
+/* OPEN FILE */
 
-function openFolder(folder){
+function openFile(name){
 
-document.getElementById("overview").style.display="none";
-document.getElementById("viewer").style.display="block";
+const f=FILES[name];
 
-const folderFiles =
-files.filter(x=>x.folder===folder);
-
-document.getElementById("viewerPath")
-.textContent="/E-17/"+folder;
-
-document.getElementById("viewerTitle")
-.textContent=folder+" // DIRECTORY";
-
-let text=
-"ARCHIVE DIRECTORY\n\n"+
-folder+
-"\n"+
-folders[folder].desc+
-"\n\n"+
-"--------------------------------\n\n";
-
-if(folderFiles.length===0){
-
-text+="NO DIRECTLY RECOVERED FILES.\n\n";
-text+="ADDITIONAL SECTORS REMAIN ENCRYPTED.";
-
-}else{
-
-folderFiles.forEach((file,i)=>{
-
-text+=
-String(i+1).padStart(2,"0")+
-"  "+
-file.name+
-"\n"+
-"    TYPE: "+
-file.type+
-"\n"+
-"    SIZE: "+
-file.size+
-"\n\n";
-
-});
-
-text+="--------------------------------\n\n";
-text+="SELECT A RECORD FROM THE ARCHIVE INDEX.";
-
-}
-
-document.getElementById("viewerBody")
-.textContent=text;
-
-}
-
-
-/* =====================================================
-   OPEN FILE
-===================================================== */
-
-function openFile(file){
+if(!f)return;
 
 document.getElementById("overview").style.display="none";
-document.getElementById("viewer").style.display="block";
 
-document.getElementById("viewerPath")
-.textContent=
-"/E-17/"+
-file.folder+
-"/"+
-file.name;
+document.getElementById("fileView").style.display="block";
 
-document.getElementById("viewerTitle")
-.textContent=file.name;
+document.getElementById("fileTitle").textContent=name;
 
-document.getElementById("viewerBody")
-.textContent=file.content;
+document.getElementById("fileBody").textContent=f.text;
 
 window.scrollTo({
 top:0,
@@ -2929,13 +2104,37 @@ behavior:"smooth"
 }
 
 
-/* =====================================================
-   OVERVIEW
-===================================================== */
+/* FOLDER */
+
+function openFolder(folder){
+
+const matches=[];
+
+Object.keys(FILES).forEach(name=>{
+
+if(FILES[name].folder===folder){
+
+matches.push(name);
+
+}
+
+});
+
+if(matches.length){
+
+openFile(matches[0]);
+
+}
+
+}
+
+
+/* OVERVIEW */
 
 function showOverview(){
 
-document.getElementById("viewer").style.display="none";
+document.getElementById("fileView").style.display="none";
+
 document.getElementById("overview").style.display="block";
 
 window.scrollTo({
@@ -2946,64 +2145,41 @@ behavior:"smooth"
 }
 
 
-/* =====================================================
-   UNLOCK
-===================================================== */
+/* UNLOCK */
 
 function unlock(){
 
-const input =
-document.getElementById("password");
+const value=
+document.getElementById("password").value.trim();
 
-const error =
-document.getElementById("loginError");
-
-if(input.value.trim()===PASSWORD){
-
-error.textContent="";
+if(value===PASSWORD){
 
 document.getElementById("login").style.display="none";
+
 document.getElementById("app").style.display="block";
 
-buildFolders();
 buildRecent();
 
 }else{
 
-error.textContent=
+document.getElementById("loginError").textContent=
 "ACCESS DENIED — INVALID ARCHIVE KEY";
 
-input.value="";
-input.focus();
+document.getElementById("password").value="";
 
 }
 
 }
 
 
-/* =====================================================
-   ENTER
-===================================================== */
+/* ENTER */
 
-document
-.getElementById("password")
-.addEventListener(
-"keydown",
-function(e){
+document.getElementById("password")
+.addEventListener("keydown",e=>{
 
-if(e.key==="Enter"){
-unlock();
-}
+if(e.key==="Enter")unlock();
 
 });
-
-
-/* =====================================================
-   INIT
-===================================================== */
-
-buildFolders();
-buildRecent();
 
 </script>
 
