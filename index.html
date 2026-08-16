@@ -3,22 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
-<title>E-17 SECURE ARCHIVE</title>
+<title>E-17 // SECURE ARCHIVE</title>
 
 <style>
 :root{
- --bg:#040608;
- --panel:#090d11;
- --panel2:#0d1318;
- --border:#25313a;
- --green:#62e6a0;
- --green2:#2f9e68;
- --text:#e8eef2;
+ --bg:#05070a;
+ --panel:#0b0f13;
+ --panel2:#0f151a;
+ --line:#25313a;
+ --text:#dce5e9;
  --muted:#71808a;
+ --green:#5ee69a;
  --red:#ff5964;
- --yellow:#e6c75a;
- --blue:#72a9ff;
+ --yellow:#e2c55c;
+ --blue:#6ba9ff;
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -26,14 +24,9 @@
 html,body{
  margin:0;
  min-height:100%;
- background:var(--bg);
+ background:#05070a;
  color:var(--text);
- font-family:-apple-system,BlinkMacSystemFont,"SFMono-Regular",
- Menlo,Consolas,monospace;
-}
-
-body{
- overflow-x:hidden;
+ font-family:-apple-system,BlinkMacSystemFont,"SFMono-Regular",Menlo,Consolas,monospace;
 }
 
 body:before{
@@ -44,82 +37,85 @@ body:before{
  z-index:999;
  background:repeating-linear-gradient(
   to bottom,
-  rgba(255,255,255,.018) 0px,
+  rgba(255,255,255,.018) 0,
   rgba(255,255,255,.018) 1px,
   transparent 1px,
   transparent 4px
  );
- opacity:.25;
 }
 
 .app{
- max-width:1150px;
+ width:min(1200px,100%);
  margin:auto;
  padding:14px;
 }
 
 .header{
- border:1px solid var(--border);
- background:linear-gradient(145deg,#0d1217,#070a0d);
+ border:1px solid var(--line);
+ background:linear-gradient(145deg,#0d1217,#080b0f);
  border-radius:16px;
  padding:18px;
- box-shadow:0 20px 60px #000;
+ box-shadow:0 20px 60px #0009;
 }
 
 .headerTop{
  display:flex;
  justify-content:space-between;
  align-items:center;
- gap:12px;
+ gap:10px;
 }
 
 .logo{
- font-size:21px;
- font-weight:bold;
+ font-size:20px;
+ font-weight:800;
  letter-spacing:3px;
 }
 
-.classification{
- color:var(--red);
- border:1px solid #69323a;
+.badge{
+ border:1px solid #5ee69a55;
+ color:var(--green);
  padding:6px 9px;
  border-radius:6px;
- font-size:9px;
+ font-size:8px;
  letter-spacing:1px;
 }
 
 .meta{
- color:var(--muted);
- font-size:9px;
  margin-top:9px;
- letter-spacing:.7px;
- line-height:1.6;
+ color:var(--muted);
+ font-size:8px;
+ line-height:1.7;
 }
 
 .status{
- margin-top:15px;
+ margin-top:12px;
  color:var(--green);
- font-size:10px;
+ font-size:9px;
 }
+
+/* LOGIN */
 
 .lock{
  max-width:560px;
  margin:70px auto;
- border:1px solid var(--border);
- background:var(--panel);
- border-radius:17px;
- padding:27px;
- box-shadow:0 30px 80px #000;
 }
 
-.lockIcon{
+.login{
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:27px;
+ box-shadow:0 30px 80px #000b;
+}
+
+.icon{
  width:58px;
  height:58px;
- border:1px solid #35434d;
+ border:1px solid #34434c;
  border-radius:50%;
  display:flex;
- align-items:center;
  justify-content:center;
+ align-items:center;
  color:var(--green);
  font-size:25px;
  margin-bottom:20px;
@@ -131,36 +127,37 @@ body:before{
  letter-spacing:1px;
 }
 
-.sub{
+.subtitle{
  color:var(--muted);
- font-size:10px;
- line-height:1.7;
- margin-top:7px;
+ font-size:9px;
+ line-height:1.8;
+ margin-top:8px;
 }
 
 label{
  display:block;
- margin-top:23px;
- color:#89959e;
- font-size:9px;
+ color:#82909a;
+ font-size:8px;
  letter-spacing:1px;
+ margin-top:22px;
 }
 
 input{
  width:100%;
  height:52px;
  margin-top:8px;
- border:1px solid #35434d;
+ border:1px solid #34424c;
+ background:#05080b;
  border-radius:9px;
- background:#040608;
  color:white;
  padding:0 14px;
+ font:13px monospace;
  outline:none;
- font-family:monospace;
 }
 
 input:focus{
  border-color:var(--green);
+ box-shadow:0 0 0 3px #5ee69a12;
 }
 
 button{
@@ -171,33 +168,33 @@ button{
 .unlock{
  width:100%;
  height:49px;
- margin-top:13px;
+ margin-top:12px;
  border:1px solid #357e58;
  border-radius:9px;
- background:#102319;
+ background:#102219;
  color:var(--green);
  font-weight:bold;
 }
 
-#error{
- min-height:22px;
+.error{
+ height:20px;
  margin-top:9px;
  color:var(--red);
- font-size:9px;
+ font-size:8px;
 }
 
-#archive{
- display:none;
-}
+/* ARCHIVE */
 
-.access{
- margin-top:16px;
- border:1px solid #2d714e;
- background:#08160f;
- color:var(--green);
+#archive{display:none}
+
+.granted{
+ margin-top:15px;
  padding:13px;
+ border:1px solid #5ee69a55;
  border-radius:10px;
- font-size:10px;
+ background:#09170f;
+ color:var(--green);
+ font-size:9px;
 }
 
 .stats{
@@ -209,18 +206,20 @@ button{
 
 .stat{
  background:var(--panel);
- border:1px solid var(--border);
+ border:1px solid var(--line);
  border-radius:10px;
- padding:12px;
+ padding:13px;
 }
 
-.statLabel{
- color:#687680;
- font-size:8px;
+.stat small{
+ display:block;
+ color:#687781;
+ font-size:7px;
 }
 
-.statValue{
- margin-top:7px;
+.stat strong{
+ display:block;
+ margin-top:6px;
  font-size:14px;
 }
 
@@ -229,39 +228,39 @@ button{
 .yellow{color:var(--yellow)}
 .blue{color:var(--blue)}
 
-.window{
+.archive{
  display:grid;
- grid-template-columns:280px 1fr;
+ grid-template-columns:275px 1fr;
+ min-height:650px;
  margin-top:10px;
- border:1px solid var(--border);
- border-radius:14px;
+ border:1px solid var(--line);
+ border-radius:15px;
  overflow:hidden;
- background:#080b0f;
- box-shadow:0 20px 70px #000;
+ background:#080c10;
 }
 
 .sidebar{
- background:#070a0d;
- border-right:1px solid var(--border);
  padding:13px;
+ border-right:1px solid var(--line);
+ background:#080c10;
 }
 
 .sideTitle{
- color:#64727b;
+ color:#66747d;
  font-size:8px;
  letter-spacing:1.5px;
- padding:6px 6px 12px;
+ padding:5px 6px 12px;
 }
 
 .folder{
- margin-bottom:5px;
+ margin-bottom:4px;
 }
 
 .folderName{
- color:var(--green);
- font-size:9px;
  padding:9px 7px;
  border-radius:6px;
+ color:var(--green);
+ font-size:9px;
  cursor:pointer;
 }
 
@@ -269,110 +268,120 @@ button{
  background:#10171c;
 }
 
-.files{
- display:block;
-}
-
 .file{
- color:#c5d0d7;
+ padding:8px 7px 8px 22px;
+ color:#b8c4ca;
  font-size:8px;
- padding:8px 6px 8px 20px;
  border-radius:6px;
  cursor:pointer;
  line-height:1.4;
 }
 
 .file:hover{
- background:#10171c;
+ background:#11191f;
+ color:white;
 }
 
 .file.active{
+ background:#14231b;
  color:var(--green);
- background:#12221a;
 }
 
 .viewer{
- min-height:650px;
  padding:20px;
- background:
- radial-gradient(circle at 90% 5%,rgba(80,220,140,.04),transparent 35%),
- #090d11;
+ overflow:auto;
 }
 
 .viewerHead{
  display:flex;
  justify-content:space-between;
  gap:10px;
- border-bottom:1px solid var(--border);
  padding-bottom:13px;
+ border-bottom:1px solid var(--line);
 }
 
 .path{
- color:#71808a;
+ color:#697983;
  font-size:8px;
  word-break:break-all;
 }
 
 .verified{
  color:var(--green);
- font-size:8px;
+ font-size:7px;
+ white-space:nowrap;
 }
 
-.viewerTitle{
- font-size:18px;
- margin-top:22px;
- color:#fff;
+.fileTitle{
+ font-size:17px;
+ margin-top:20px;
+ color:white;
+}
+
+.fileMeta{
+ display:flex;
+ flex-wrap:wrap;
+ gap:7px;
+ margin-top:12px;
+}
+
+.tag{
+ border:1px solid var(--line);
+ padding:5px 7px;
+ border-radius:5px;
+ color:#87959e;
+ font-size:7px;
 }
 
 .content{
- margin-top:18px;
- color:#c8d2d9;
- font-size:10px;
- line-height:1.85;
+ margin-top:20px;
  white-space:pre-wrap;
- word-break:break-word;
+ color:#c6d0d5;
+ font-size:10px;
+ line-height:1.8;
 }
 
-.notice{
+.redaction{
+ color:#555;
+ background:#16191b;
+ padding:1px 5px;
+}
+
+.warning{
  margin-top:25px;
  padding:12px;
  border-left:2px solid var(--yellow);
  background:#151309;
- color:#cbbb72;
- font-size:9px;
- line-height:1.6;
+ color:#c6b76c;
+ font-size:8px;
+ line-height:1.7;
 }
 
 .footer{
  text-align:center;
- color:#3f4b53;
- font-size:8px;
- padding:18px;
- line-height:1.8;
+ padding:14px;
+ color:#3c484f;
+ font-size:7px;
 }
 
-@media(max-width:750px){
+/* MOBILE */
 
+@media(max-width:760px){
  .app{padding:9px}
-
- .logo{
-  font-size:16px;
-  letter-spacing:2px;
- }
-
- .classification{display:none}
+ .logo{font-size:16px}
+ .badge{display:none}
 
  .stats{
   grid-template-columns:repeat(2,1fr);
  }
 
- .window{
+ .archive{
   grid-template-columns:1fr;
  }
 
  .sidebar{
   border-right:0;
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid var(--line);
  }
 
  .viewer{
@@ -380,8 +389,7 @@ button{
  }
 
  .lock{
-  margin:45px auto;
-  padding:21px;
+  margin:40px auto;
  }
 }
 </style>
@@ -391,127 +399,108 @@ button{
 
 <div class="app">
 
-<!-- HEADER -->
-
-<div class="header">
+<header class="header">
 
  <div class="headerTop">
-
-  <div class="logo">
-   E-17 SECURE ARCHIVE
-  </div>
-
-  <div class="classification">
-   BLACK // EYES ONLY
-  </div>
-
+  <div class="logo">E-17 // SECURE ARCHIVE</div>
+  <div class="badge">BLACK // EYES ONLY</div>
  </div>
 
  <div class="meta">
-  FORENSIC STORAGE MEDIA //
-  SSD NODE E-17 //
-  LOCAL READ-ONLY INSTANCE //
-  EVIDENCE DATABASE
+  FORENSIC STORAGE MEDIA // NODE E-17 //
+  LOCAL READ-ONLY INSTANCE // SECTOR 8
  </div>
 
  <div id="systemStatus" class="status">
   ● DEVICE LOCKED
  </div>
 
-</div>
+</header>
 
 
 <!-- LOGIN -->
 
-<div id="lockScreen" class="lock">
+<section id="lockScreen" class="lock">
 
- <div class="lockIcon">⌾</div>
+ <div class="login">
 
- <div class="title">
-  SECURE SSD AUTHENTICATION
+  <div class="icon">⌾</div>
+
+  <div class="title">
+   SECURE ARCHIVE AUTHENTICATION
+  </div>
+
+  <div class="subtitle">
+   Encrypted forensic storage detected.<br>
+   Authorized credentials required to mount archive.
+  </div>
+
+  <label>ARCHIVE ACCESS KEY</label>
+
+  <input
+   id="password"
+   type="password"
+   placeholder="Enter access key"
+   autocomplete="off"
+   autocapitalize="none"
+   spellcheck="false"
+  >
+
+  <button id="unlockButton" class="unlock">
+   MOUNT ENCRYPTED SSD
+  </button>
+
+  <div id="error" class="error"></div>
+
  </div>
 
- <div class="sub">
-  Encrypted forensic storage detected.<br>
-  Authorization required to mount evidence archive.
- </div>
-
- <label>
-  ARCHIVE ACCESS KEY
- </label>
-
- <input
-  id="password"
-  type="password"
-  placeholder="Enter archive key"
-  autocomplete="off"
-  autocapitalize="none"
-  spellcheck="false"
- >
-
- <button class="unlock" id="unlock">
-  MOUNT ENCRYPTED SSD
- </button>
-
- <div id="error"></div>
-
- <div class="sub">
-  SECURITY LEVEL: BLACK<br>
-  FAILED ATTEMPTS ARE LOGGED LOCALLY.
- </div>
-
-</div>
+</section>
 
 
 <!-- ARCHIVE -->
 
-<div id="archive">
+<section id="archive">
 
- <div class="access">
-  ● SSD MOUNTED — DECRYPTION COMPLETE — READ ONLY
+ <div class="granted">
+  ● ACCESS GRANTED — E-17 SSD DECRYPTED — READ ONLY
  </div>
-
-
- <!-- STATS -->
 
  <div class="stats">
 
   <div class="stat">
-   <div class="statLabel">SSD NODE</div>
-   <div class="statValue green">E-17</div>
+   <small>NODE</small>
+   <strong class="green">E-17</strong>
   </div>
 
   <div class="stat">
-   <div class="statLabel">CLASSIFICATION</div>
-   <div class="statValue red">BLACK</div>
+   <small>CLASSIFICATION</small>
+   <strong>BLACK</strong>
   </div>
 
   <div class="stat">
-   <div class="statLabel">COMPANIES</div>
-   <div class="statValue">14</div>
+   <small>ENTITIES</small>
+   <strong>27</strong>
   </div>
 
   <div class="stat">
-   <div class="statLabel">POLITICAL SUBJECTS</div>
-   <div class="statValue">07</div>
+   <small>PERSONNEL</small>
+   <strong>14</strong>
   </div>
 
   <div class="stat">
-   <div class="statLabel">EVIDENCE</div>
-   <div class="statValue yellow">42</div>
+   <small>STATUS</small>
+   <strong class="green">READ ONLY</strong>
   </div>
 
  </div>
 
 
- <!-- FILE SYSTEM -->
-
- <div class="window">
+ <div class="archive">
 
   <aside class="sidebar">
 
    <div class="sideTitle">
-    SSD DIRECTORY
+    ENCRYPTED DIRECTORY
    </div>
 
    <div id="tree"></div>
@@ -524,1255 +513,1290 @@ button{
    <div class="viewerHead">
 
     <div id="path" class="path">
-     /E-17/SELECT FILE
+     /E-17/ROOT
     </div>
 
     <div class="verified">
-     VERIFIED
+     ● VERIFIED
     </div>
 
    </div>
 
-   <div id="viewerTitle" class="viewerTitle">
-    E-17 FORENSIC STORAGE
+   <div id="fileTitle" class="fileTitle">
+    E-17 DATABASE
    </div>
+
+   <div id="fileMeta" class="fileMeta"></div>
 
    <div id="content" class="content">
-SSD successfully decrypted.
+E-17 encrypted database mounted.
 
-The storage contains classified
-financial, corporate and political
-evidence.
-
-Select a file from the directory.
+Select a record from the directory.
 
 WARNING:
-
-This archive is a fictional
-investigation database created
-for the E-17 story.
+The archive contains fictional intelligence
+records created for the SECTOR 8 universe.
    </div>
 
-   <div class="notice">
-    ARCHIVE NOTICE:<br>
-    Several records remain encrypted.
-    Additional evidence may require
-    PHASE TWO ACCESS.
+   <div class="warning">
+    ARCHIVE NOTICE:
+    Several records contain [REDACTED] sectors.
+    Clearance level BLACK required for complete access.
    </div>
 
   </main>
 
  </div>
 
-
  <div class="footer">
-  E-17 // SECTOR 8 // FORENSIC ARCHIVE
-  <br>
-  FICTIONAL INVESTIGATION DATABASE
+  E-17 // SECTOR 8 // FICTIONAL INTELLIGENCE ARCHIVE
  </div>
 
-</div>
+</section>
 
 </div>
 
 
 <script>
 
-/* =====================================================
+/* =========================================================
    PASSWORD
-===================================================== */
+========================================================= */
 
-const PASSWORD =
-"E17-SECURITY-ARCHIVE-8F3A-2026";
+const PASSWORD = "E17-SECURITY-ARCHIVE-8F3A-2026";
 
 
-/* =====================================================
+/* =========================================================
    SSD DATABASE
-===================================================== */
+   FICTIONAL CONTENT
+========================================================= */
 
 const DATA = {
 
-"00_SYSTEM/SSD_METADATA.txt": `
-E-17 FORENSIC STORAGE
 
-DEVICE:
-SSD-E17-04
+"00_ROOT/README.txt": {
+ title:"E-17 DATABASE // README",
+ type:"SYSTEM",
+ level:"BLACK",
+ text:`
+E-17 SECURE DATABASE
 
-STATUS:
-SUCCESSFULLY RECOVERED
+DATABASE PURPOSE
+----------------
 
-STORAGE TYPE:
-FORENSIC SOLID STATE DRIVE
+Recovered encrypted intelligence database.
 
-MODE:
+Primary subjects:
+
+• corporate corruption
+• financial intermediaries
+• political influence
+• shell companies
+• bribery networks
+• compromised officials
+• Eclipse infrastructure
+
+DATABASE STATUS
+---------------
+
 READ ONLY
 
---------------------------------
+RECOVERY:
+PARTIAL
 
-RECOVERY NOTES
+CLEARANCE:
+BLACK
 
-The device was recovered from
-an unidentified secure location.
+IMPORTANT
+---------
 
-Original filesystem was partially
-destroyed.
+All identities, organizations and allegations
+contained in this archive are fictional and
+belong to the SECTOR 8 universe.
+`
+},
 
-Approximately 78% of the
-original data was recovered.
 
---------------------------------
-
-RECOVERY PRIORITY:
-
-FINANCIAL RECORDS
-POLITICAL CONTACTS
-CORPORATE STRUCTURE
-PAYMENT RECORDS
-COMMUNICATIONS
-
---------------------------------
-
-WARNING:
-
-Several sectors remain encrypted.
-`,
-
-"00_SYSTEM/RECOVERY_LOG.txt": `
-RECOVERY LOG
-
-03:11:04
-SSD detected.
-
-03:11:18
-Physical integrity verified.
-
-03:12:41
-Encrypted partition identified.
-
-03:14:09
-Primary key reconstructed.
-
-03:17:32
-Directory recovered.
-
-03:19:03
-Financial database mounted.
-
-03:20:18
-Political contact database mounted.
-
-03:21:44
-Evidence index recovered.
-
-03:22:01
-READ ONLY MODE ENABLED.
-
---------------------------------
-
-FINAL STATUS:
-
-78% RECOVERED
-22% UNKNOWN
-`,
-
-"01_COMPANIES/HALE_HOLDINGS.txt": `
-CORPORATE DOSSIER
-
+"01_CORPORATIONS/H47_LOGISTICS.txt": {
+ title:"H-47 LOGISTICS",
+ type:"CORPORATE ENTITY",
+ level:"HIGH",
+ text:`
 ENTITY:
-HALE HOLDINGS LTD.
+H-47 LOGISTICS
+
+STATUS:
+ACTIVE
 
 CLASSIFICATION:
-PRIMARY CORPORATE NODE
+SHELL / FRONT ENTITY
 
-STATUS:
-ACTIVE
+REGISTERED ACTIVITY:
+International logistics
+
+ESTIMATED EMPLOYEES:
+18
+
+DECLARED ANNUAL REVENUE:
+€31.4M
+
+ESTIMATED TRANSACTION VOLUME:
+€410M+
 
 --------------------------------
 
-DECLARED BUSINESS:
+KNOWN CONNECTIONS
 
-Investment management
-Real estate
-Infrastructure
-Private equity
-
---------------------------------
-
-KNOWN ASSOCIATIONS:
-
-H47 LOGISTICS
+H-47 LOGISTICS
+      ↓
 MERIDIAN PROPERTY GROUP
+      ↓
 NORTHSTAR CAPITAL
-ORION DEVELOPMENT
+      ↓
+HALE FOUNDATION
 
 --------------------------------
 
-OBSERVATION:
+SUSPICIOUS INDICATORS
 
-The company appears legitimate
-when examined individually.
+• transaction volume inconsistent with staff size
+• repeated intermediary payments
+• inactive subsidiaries
+• unexplained international transfers
+• warehouses with limited commercial activity
 
-The same entities become
-significant when their financial
-relationships are mapped together.
+RISK:
+CRITICAL
+`
+},
 
---------------------------------
 
-RISK ASSESSMENT:
-
-HIGH
-
-CONFIDENCE:
-91%
-`,
-
-"01_COMPANIES/H47_LOGISTICS.txt": `
-CORPORATE DOSSIER
-
+"01_CORPORATIONS/MERIDIAN_PROPERTY.txt": {
+ title:"MERIDIAN PROPERTY GROUP",
+ type:"CORPORATE ENTITY",
+ level:"HIGH",
+ text:`
 ENTITY:
-H47 LOGISTICS
-
-TYPE:
-TRANSPORTATION COMPANY
+MERIDIAN PROPERTY GROUP
 
 STATUS:
 ACTIVE
 
---------------------------------
+BUSINESS:
+Commercial real estate
 
-DECLARED ACTIVITY:
-
-Freight
-Warehousing
-Transportation
+KNOWN FUNCTION:
+Asset intermediary
 
 --------------------------------
 
-IRREGULARITIES:
+OBSERVATION
 
-• contracts inconsistent with
-  declared turnover
+Meridian owns or leases multiple
+industrial properties used by entities
+connected to H-47.
 
-• repeated transfers to
-  intermediary companies
+Several properties appear commercially
+underutilized.
 
-• unexplained government
-  subcontracting
+FINANCIAL PATTERN:
 
---------------------------------
-
-DIRECTOR:
-
-[REDACTED]
-
---------------------------------
-
-CONNECTED ENTITIES:
-
-HALE HOLDINGS
-MERIDIAN PROPERTY GROUP
-NORTHSTAR CAPITAL
+PROPERTY PURCHASE
+        ↓
+LEASE TO FRONT COMPANY
+        ↓
+SECONDARY COMPANY
+        ↓
+OFFSHORE PAYMENT
 
 --------------------------------
 
 ASSESSMENT:
 
-POSSIBLE FRONT ENTITY.
-`,
+LIKELY ASSET-LAYERING ENTITY
 
-"01_COMPANIES/MERIDIAN_GROUP.txt": `
-CORPORATE DOSSIER
+RISK:
+HIGH
+`
+},
 
+
+"01_CORPORATIONS/NORTHSTAR_CAPITAL.txt": {
+ title:"NORTHSTAR CAPITAL",
+ type:"INVESTMENT ENTITY",
+ level:"CRITICAL",
+ text:`
 ENTITY:
-MERIDIAN PROPERTY GROUP
+NORTHSTAR CAPITAL
 
 STATUS:
 ACTIVE
 
---------------------------------
+DECLARED FUNCTION:
+Private investment management
 
-PRIMARY BUSINESS:
-
-Commercial property
-
---------------------------------
-
-OBSERVED ACTIVITY:
-
-Properties repeatedly purchased
-below estimated market value.
-
-Several properties were later
-sold to entities connected to
-Hale Holdings.
-
---------------------------------
-
-FINANCIAL FLAG:
-
-UNUSUAL INTERCOMPANY PRICING
-
---------------------------------
-
-CONNECTED PERSONS:
-
-VICTOR HALE
-[REDACTED]
-[REDACTED]
-
---------------------------------
-
-CLASSIFICATION:
-
+DATABASE ASSESSMENT:
 FINANCIAL INTERMEDIARY
-`,
-
-"01_COMPANIES/NORTHSTAR_CAPITAL.txt": `
-CORPORATE DOSSIER
-
-ENTITY:
-NORTHSTAR CAPITAL
-
-TYPE:
-PRIVATE INVESTMENT GROUP
-
-STATUS:
-ACTIVE
 
 --------------------------------
 
-OBSERVED ROLE:
+KNOWN CONNECTIONS
 
-Funds appear to pass through
-Northstar before reaching
-multiple unrelated entities.
-
---------------------------------
-
-PATTERN:
-
-SOURCE
- ↓
-NORTHSTAR CAPITAL
- ↓
-FOUNDATION
- ↓
-OFFSHORE ENTITY
- ↓
-UNKNOWN BENEFICIARY
+H-47 LOGISTICS
+MERIDIAN PROPERTY GROUP
+HALE FOUNDATION
+[REDACTED] BANK
+[REDACTED] HOLDINGS
 
 --------------------------------
 
-PURPOSE:
+PATTERN
 
-UNCONFIRMED
+Funds enter through legitimate
+investment vehicles.
+
+Funds are divided into smaller
+transactions.
+
+Transactions are routed through
+multiple jurisdictions.
+
+Final destination remains unknown.
 
 --------------------------------
 
 RISK:
-
 CRITICAL
-`,
+`
+},
 
-"01_COMPANIES/FRONT_NETWORK.txt": `
-CORPORATE NETWORK
 
-PRIMARY NODE:
-HALE HOLDINGS
-
-        |
-        +--- H47 LOGISTICS
-        |
-        +--- MERIDIAN PROPERTY
-        |
-        +--- NORTHSTAR CAPITAL
-        |
-        +--- ORION DEVELOPMENT
-        |
-        +--- HALE FOUNDATION
-
---------------------------------
-
-NETWORK CHARACTERISTICS:
-
-Each company has a legitimate
-commercial explanation.
-
-The network as a whole displays
-patterns inconsistent with
-ordinary commercial activity.
-
---------------------------------
-
-ASSESSMENT:
-
-DISTRIBUTED CORPORATE STRUCTURE
-`,
-
-"02_POLITICIANS/MINISTER_P01.txt": `
-POLITICAL SUBJECT
-
-SUBJECT:
-P-01
-
-NAME:
-ADRIAN VALE
-
-POSITION:
-MINISTER OF INFRASTRUCTURE
+"01_CORPORATIONS/BLACKSTONE_MEDICAL.txt": {
+ title:"BLACKSTONE MEDICAL GROUP",
+ type:"CORPORATE ENTITY",
+ level:"MEDIUM",
+ text:`
+ENTITY:
+BLACKSTONE MEDICAL GROUP
 
 STATUS:
-ACTIVE
+UNDER REVIEW
+
+DECLARED BUSINESS:
+Medical equipment
+
+SUSPICIOUS ACTIVITY:
+
+Repeated contracts with companies
+outside the medical sector.
+
+Several invoices describe
+"consulting services".
+
+No corresponding personnel
+or physical activity identified.
 
 --------------------------------
 
-PUBLIC PROFILE:
+POSSIBLE FUNCTION:
 
-Reform-oriented politician.
-Known for infrastructure
-investment programs.
-
---------------------------------
-
-PRIVATE CONNECTIONS:
-
-Three companies associated
-with political donors later
-received infrastructure
-contracts.
-
---------------------------------
-
-FINANCIAL RECORD:
-
-Indirect payments detected.
-
-Source:
-NORTHSTAR CAPITAL
-
-Destination:
-PRIVATE FOUNDATION
-
-Beneficiary:
-POLITICAL NETWORK
+Payment concealment.
 
 --------------------------------
 
 CONFIDENCE:
-82%
+61%
 
-STATUS:
-UNDER CLASSIFIED REVIEW
-`,
+RISK:
+MEDIUM
+`
+},
 
-"02_POLITICIANS/DEPUTY_P02.txt": `
-POLITICAL SUBJECT
 
+"02_POLITICAL/PRESIDENTIAL_OFFICE.txt": {
+ title:"PRESIDENTIAL OFFICE // CONTACT NODE",
+ type:"POLITICAL NETWORK",
+ level:"OMEGA",
+ text:`
 SUBJECT:
-P-02
+HIGH-LEVEL POLITICAL CONTACT
 
-NAME:
-ELIAS VORN
+IDENTITY:
+[REDACTED]
 
-POSITION:
-DEPUTY CHAIRMAN
-PARLIAMENTARY FINANCE COMMITTEE
+COUNTRY:
+[REDACTED]
 
 STATUS:
 ACTIVE
 
 --------------------------------
 
-OBSERVED CONNECTION:
+ALLEGATIONS
 
-Multiple meetings with
-representatives of
-HALE HOLDINGS.
+Indirect financial relationships
+with companies linked to Eclipse.
 
-Meetings were not disclosed
-in public schedules.
+No direct payment identified.
+
+Known intermediary:
+
+NORTHSTAR CAPITAL
 
 --------------------------------
 
-DOCUMENTED EVENT:
+RECORDED EVENTS
 
-A regulatory proposal was
-delayed for 47 days.
-
-During the same period,
-three companies linked to
-Hale Holdings received
-additional time to restructure
-their finances.
+04 meetings
+03 private dinners
+02 undisclosed travel events
 
 --------------------------------
 
 ASSESSMENT:
 
-POTENTIAL CONFLICT OF INTEREST
-`,
+POLITICAL ACCESS CONFIRMED.
 
-"02_POLITICIANS/MAYOR_P03.txt": `
-POLITICAL SUBJECT
+CORRUPTION:
+UNPROVEN
 
+INFLUENCE RISK:
+CRITICAL
+`
+},
+
+
+"02_POLITICAL/MINISTER_04.txt": {
+ title:"MINISTER // SUBJECT 04",
+ type:"POLITICAL FIGURE",
+ level:"CRITICAL",
+ text:`
 SUBJECT:
-P-03
+MINISTER 04
 
-NAME:
-MARCUS REY
+IDENTITY:
+[REDACTED]
 
 POSITION:
-MAYOR
+ECONOMIC POLICY
 
 STATUS:
 ACTIVE
 
 --------------------------------
 
-OBSERVED ACTIVITY:
+KNOWN CONNECTIONS
 
-Municipal land contracts.
-
---------------------------------
-
-IRREGULARITY:
-
-A public property was sold
-to ORION DEVELOPMENT.
-
-ORION DEVELOPMENT later sold
-the property to a company
-linked to MERIDIAN PROPERTY.
+• Northstar Capital
+• Meridian Property Group
+• private banking network
 
 --------------------------------
 
-PRICE DIFFERENCE:
+RECOVERED EVIDENCE
 
+Three meetings with financial
+intermediaries immediately before
+major regulatory decisions.
+
+--------------------------------
+
+FINANCIAL FINDING
+
+Undeclared beneficial interest
+in a company connected to
+a family associate.
+
+--------------------------------
+
+ASSESSMENT:
+
+HIGH CORRUPTION RISK
+
+DIRECT PROOF:
+PARTIAL
+`
+},
+
+
+"02_POLITICAL/MAYOR_17.txt": {
+ title:"MUNICIPAL OFFICIAL // 17",
+ type:"PUBLIC OFFICIAL",
+ level:"HIGH",
+ text:`
+SUBJECT:
+MUNICIPAL OFFICIAL 17
+
+IDENTITY:
+[REDACTED]
+
+ROLE:
+CITY DEVELOPMENT
+
+--------------------------------
+
+SUSPICIOUS ACTIVITY
+
+Repeated zoning decisions benefited
+companies associated with Meridian.
+
+Decision timeline:
+
+PROPERTY PURCHASE
+        ↓
+72 HOURS
+        ↓
+ZONING CHANGE
+        ↓
+PROPERTY VALUE INCREASE
+
+--------------------------------
+
+KNOWN BENEFIT:
+
+Private financial arrangement
+through an intermediary.
+
+--------------------------------
+
+STATUS:
+
+UNDER INVESTIGATION
+
+RISK:
+HIGH
+`
+},
+
+
+"03_CORRUPTION/CASE_001.txt": {
+ title:"CORRUPTION CASE 001",
+ type:"CASE FILE",
+ level:"CRITICAL",
+ text:`
+CASE:
+001
+
+SUBJECT:
+PUBLIC PROCUREMENT
+
+--------------------------------
+
+FINDING
+
+Three companies repeatedly won
+government contracts.
+
+Ownership appeared independent.
+
+DATABASE RECOVERY shows common
+financial intermediaries.
+
+--------------------------------
+
+CONTRACT VALUE:
+
+€86,700,000
+
+ESTIMATED OVERPAYMENT:
+
+€17,900,000
+
+--------------------------------
+
+FLOW
+
+GOVERNMENT
+   ↓
+CONTRACTOR A
+   ↓
+CONSULTANT B
+   ↓
+NORTHSTAR
+   ↓
 [REDACTED]
 
 --------------------------------
 
-ASSESSMENT:
-
-POSSIBLE CONTRACT MANIPULATION
-`,
-
-"02_POLITICIANS/POLITICAL_NETWORK.txt": `
-POLITICAL NETWORK
-
-CLASSIFICATION:
-BLACK
-
---------------------------------
-
-KNOWN SUBJECTS:
-
-P-01
-P-02
-P-03
-P-04
-P-05
-P-06
-P-07
-
---------------------------------
-
-NETWORK FUNCTION:
-
-Political influence appears
-to be distributed rather than
-controlled by one individual.
-
-No evidence currently proves
-that every subject knows the
-full structure.
-
---------------------------------
-
-IMPORTANT:
-
-Some politicians appear to
-benefit financially.
-
-Others appear to provide
-regulatory access.
-
-Others may simply be
-unwitting intermediaries.
-
---------------------------------
-
 STATUS:
 
-PARTIALLY CONFIRMED.
-`,
+ACTIVE
 
-"03_CORRUPTION/BRIBERY_LEDGER.txt": `
-CLASSIFIED PAYMENT LEDGER
+RISK:
+CRITICAL
+`
+},
 
---------------------------------
 
-DATE        AMOUNT      NODE
+"03_CORRUPTION/CASE_014.txt": {
+ title:"CORRUPTION CASE 014",
+ type:"CASE FILE",
+ level:"HIGH",
+ text:`
+CASE:
+014
 
-04/11/24    [REDACTED]   P-02
-18/12/24    [REDACTED]   P-01
-02/02/25    [REDACTED]   P-03
-19/03/25    [REDACTED]   P-04
-
---------------------------------
-
-PAYMENT METHOD:
-
-INTERMEDIARY ENTITIES
+SUBJECT:
+INFRASTRUCTURE PROJECT
 
 --------------------------------
 
-DIRECT PAYMENTS:
+SUSPICIOUS INDICATORS
 
-NONE IDENTIFIED
-
---------------------------------
-
-ASSESSMENT:
-
-Payments were deliberately
-structured to avoid direct
-connection between source and
-political recipient.
-
-CONFIDENCE:
-89%
-`,
-
-"03_CORRUPTION/GOVERNMENT_CONTRACTS.txt": `
-GOVERNMENT CONTRACT ANALYSIS
+• bid manipulation
+• undisclosed ownership
+• inflated consulting fees
+• political meetings
+• unexplained cash withdrawals
 
 --------------------------------
 
-CONTRACT SERIES:
+ESTIMATED VALUE:
 
-INFRA-44
-INFRA-52
-INFRA-61
-INFRA-73
+€42M
 
---------------------------------
+QUESTIONABLE PAYMENTS:
 
-OBSERVATION:
-
-Companies connected to the
-same financial network repeatedly
-appear during procurement.
+€6.8M
 
 --------------------------------
 
-PATTERN:
+PRIMARY BENEFICIARY:
 
-NEW COMPANY
- ↓
-POLITICAL CONTACT
- ↓
-TENDER MODIFICATION
- ↓
-CONTRACT AWARD
- ↓
-SUBCONTRACTOR
- ↓
-INTERMEDIARY PAYMENT
+[REDACTED]
 
---------------------------------
+SECONDARY BENEFICIARIES:
 
-ASSESSMENT:
+[REDACTED]
+[REDACTED]
 
-POTENTIAL PROCUREMENT
-MANIPULATION
-`,
+STATUS:
+PARTIALLY CONFIRMED
+`
+},
 
-"03_CORRUPTION/OFFSHORE_TRANSFERS.txt": `
-OFFSHORE TRANSACTION ANALYSIS
 
---------------------------------
+"03_CORRUPTION/CASE_027.txt": {
+ title:"CORRUPTION CASE 027",
+ type:"CASE FILE",
+ level:"OMEGA",
+ text:`
+CASE:
+027
 
-SOURCE:
-
-NORTHSTAR CAPITAL
-
-        ↓
-
-OFFSHORE ENTITY A
-
-        ↓
-
-OFFSHORE ENTITY B
-
-        ↓
-
-PRIVATE FOUNDATION
-
-        ↓
-
-POLITICAL DONATION
+SUBJECT:
+POLITICAL INFLUENCE
 
 --------------------------------
 
-OBSERVED CHARACTERISTICS:
+OBJECTIVE:
 
-• multiple jurisdictions
-• repeated transfers
-• intermediary accounts
-• delayed reporting
-• unclear beneficiary
-
---------------------------------
-
-CONCLUSION:
-
-STRUCTURED FINANCIAL
-OBFUSCATION
-`,
-
-"03_CORRUPTION/BLACKMAIL_FILES.txt": `
-SENSITIVE MATERIAL
-
---------------------------------
-
-Several records indicate that
-certain political subjects may
-have been pressured using
-private information.
+Influence policy decisions
+through financial dependency.
 
 --------------------------------
 
 METHOD:
 
-Information collection
- ↓
-Personal vulnerability
- ↓
-Private communication
- ↓
-Political decision
+PRIVATE DONATIONS
+        ↓
+FOUNDATION
+        ↓
+CONSULTING COMPANY
+        ↓
+POLITICAL NETWORK
 
 --------------------------------
 
-SOURCE MATERIAL:
+DATABASE NOTE:
 
-PARTIALLY DESTROYED
-
---------------------------------
-
-STATUS:
-
-HIGHLY RESTRICTED
-
-Additional authorization
-required.
-`,
-
-"04_FINANCIAL/BANK_TRANSFERS.txt": `
-FINANCIAL TRANSACTION INDEX
-
---------------------------------
-
-TRANSACTION GROUP:
-
-H-47
-
-SOURCE:
-H47 LOGISTICS
-
-DESTINATION:
-NORTHSTAR CAPITAL
-
-STATUS:
-VERIFIED
-
---------------------------------
-
-TRANSACTION GROUP:
-
-M-21
-
-SOURCE:
-MERIDIAN PROPERTY
-
-DESTINATION:
-HALE FOUNDATION
-
-STATUS:
-VERIFIED
-
---------------------------------
-
-TRANSACTION GROUP:
-
-P-09
-
-SOURCE:
-OFFSHORE ENTITY
-
-DESTINATION:
-POLITICAL FOUNDATION
-
-STATUS:
-PARTIALLY VERIFIED
-
---------------------------------
-
-TOTAL RECOVERED:
-
-[REDACTED]
-`,
-
-"04_FINANCIAL/BENEFICIAL_OWNERS.txt": `
-BENEFICIAL OWNERSHIP ANALYSIS
-
---------------------------------
-
-ENTITY:
-H47 LOGISTICS
-
-DECLARED OWNER:
-[REDACTED]
-
-POSSIBLE CONTROLLING ENTITY:
-HALE HOLDINGS
-
-CONFIDENCE:
-76%
-
---------------------------------
-
-ENTITY:
-ORION DEVELOPMENT
-
-DECLARED OWNER:
-[REDACTED]
-
-POSSIBLE CONTROLLING ENTITY:
-MERIDIAN PROPERTY GROUP
-
-CONFIDENCE:
-81%
-
---------------------------------
-
-NOTE:
-
-Ownership structures were
-intentionally fragmented.
-`,
-
-"04_FINANCIAL/SHELL_COMPANIES.txt": `
-SHELL COMPANY INDEX
-
---------------------------------
-
-SC-001
-SC-002
-SC-003
-SC-004
-SC-005
-SC-006
-
---------------------------------
-
-COMMON CHARACTERISTICS:
-
-• minimal employees
-• high financial activity
-• shared legal representatives
-• overlapping addresses
-• short operating periods
-
---------------------------------
-
-PURPOSE:
-
-MOVEMENT OF FUNDS
-
---------------------------------
-
-STATUS:
-
-NETWORK CONFIRMED
-`,
-
-"05_EVIDENCE/COMMUNICATION_LOG.txt": `
-COMMUNICATION RECOVERY
-
---------------------------------
-
-MESSAGE 01
-
-UNKNOWN:
-"The minister needs the
-paperwork changed."
-
-REPLY:
-"It has already been arranged."
-
---------------------------------
-
-MESSAGE 02
-
-UNKNOWN:
-"Does Hale know?"
-
-REPLY:
-"He knows enough."
-
---------------------------------
-
-MESSAGE 03
-
-UNKNOWN:
-"And the others?"
-
-REPLY:
-"They don't need the entire
-picture."
-
---------------------------------
-
-SOURCE:
-
-RECOVERED DEVICE
-
-AUTHENTICITY:
-HIGH
-`,
-
-"05_EVIDENCE/MEETING_RECORDS.txt": `
-MEETING RECORDS
-
---------------------------------
-
-MEETING 01
-
-LOCATION:
-PRIVATE CLUB
-
-ATTENDEES:
-
-VICTOR HALE
-P-01
-[REDACTED]
-[REDACTED]
-
---------------------------------
-
-MEETING 02
-
-LOCATION:
-PRIVATE RESIDENCE
-
-ATTENDEES:
-
-P-02
-NORTHSTAR REPRESENTATIVE
-
---------------------------------
-
-MEETING 03
-
-LOCATION:
-UNKNOWN
-
-ATTENDEES:
-
-P-03
-H47 REPRESENTATIVE
-
---------------------------------
-
-VIDEO:
-
-PARTIALLY RECOVERED
-`,
-
-"05_EVIDENCE/ACCESS_LOG.txt": `
-SYSTEM ACCESS LOG
-
---------------------------------
-
-01:14:22
-USER: UNKNOWN
-
-01:15:03
-DATABASE ACCESSED
-
-01:17:51
-POLITICAL DIRECTORY OPENED
-
-01:18:09
-FINANCIAL LEDGER COPIED
-
-01:19:44
-E-17 INDEX DELETED
-
-01:20:01
-REMOTE CONNECTION DETECTED
-
---------------------------------
-
-IMPORTANT:
-
-THE SSD WAS ACCESSED
-BEFORE ITS RECOVERY.
-
---------------------------------
-
-QUESTION:
-
-WHO HAD ACCESS?
-`,
-
-"06_INCIDENTS/SSD_RECOVERY.txt": `
-E-17 SSD RECOVERY
-
---------------------------------
-
-LOCATION:
-[REDACTED]
-
-TIME:
-03:12
-
---------------------------------
-
-RECOVERED:
-
-• encrypted SSD
-• access card
-• metallic key
-• paper fragment
-• damaged mobile device
-
---------------------------------
-
-IMPORTANT:
-
-The SSD appears to have been
-removed from secure storage
-before the incident.
-
---------------------------------
-
-CONCLUSION:
-
-THE DEVICE WAS NOT LOST.
-
-IT WAS MOVED.
-`,
-
-"06_INCIDENTS/DANIEL_CROSS.txt": `
-SUBJECT:
-
-DANIEL CROSS
-
-POSITION:
-
-ACCOUNTING ANALYST
-
-STATUS:
-
-MISSING
-
---------------------------------
-
-Cross discovered irregular
-financial relationships.
-
-He attempted to preserve
-accounting records.
-
---------------------------------
-
-LAST KNOWN LOCATION:
-
-HALE FINANCIAL OFFICE
-
---------------------------------
-
-RECOVERED MESSAGE:
-
-"If I disappear, check
-the companies before
-checking the politicians."
-
---------------------------------
-
-STATUS:
-
-UNRESOLVED
-`,
-
-"06_INCIDENTS/MALIK.txt": `
-SUBJECT:
-
-MALIK
-
-STATUS:
-
-DECEASED
-
---------------------------------
-
-ROLE:
-
-LOGISTICS
-
---------------------------------
-
-RELEVANT INFORMATION:
-
-Malik possessed records
-connected to transportation
-contracts.
-
-One recovered document
-contained a shipment number
-linked to H47 Logistics.
+The same intermediaries appear
+in seven unrelated investigations.
 
 --------------------------------
 
 ASSESSMENT:
 
-The death occurred shortly
-after the shipment record
-was copied.
+NOT ISOLATED CORRUPTION.
 
---------------------------------
+LIKELY NETWORKED ACTIVITY.
 
 STATUS:
+CRITICAL
+`
+},
 
-INVESTIGATION CONTINUES
-`,
 
-"07_ENCRYPTED/PHASE_TWO.enc": `
-████████████████████████████
+"04_FINANCIAL_NETWORK/ROUTE_A.txt": {
+ title:"FINANCIAL ROUTE A",
+ type:"MONEY FLOW",
+ level:"CRITICAL",
+ text:`
+ROUTE A
 
-ENCRYPTED SECTOR
+SOURCE:
+CORPORATE CONTRACT
 
-ACCESS LEVEL:
-PHASE TWO
+        ↓
 
-KEY REQUIRED
+CONTRACTOR A
 
-████████████████████████████
+        ↓
 
-FILE CONTENT:
+CONSULTING ENTITY
 
-[ ENCRYPTED ]
+        ↓
 
-[ ENCRYPTED ]
+H-47 LOGISTICS
 
-[ ENCRYPTED ]
+        ↓
 
---------------------------------
+NORTHSTAR CAPITAL
 
-WARNING:
+        ↓
 
-UNAUTHORIZED ACCESS WILL
-TRIGGER ARCHIVE LOCKDOWN.
-`,
+OFFSHORE VEHICLE
 
-"07_ENCRYPTED/FINAL_DIRECTIVE.enc": `
-████████████████████████████
+        ↓
 
-FINAL DIRECTIVE
-
-STATUS:
-ENCRYPTED
-
---------------------------------
-
-RECOVERY REQUIRED:
-
-POLITICAL NETWORK
-CORPORATE NETWORK
-FINANCIAL NETWORK
+[REDACTED]
 
 --------------------------------
 
-IDENTIFY:
+ESTIMATED TOTAL:
 
-WHO CREATED THE NETWORK?
+€124,000,000
 
-WHO FUNDS IT?
-
-WHO BENEFITS?
-
-WHO CONTROLS IT?
-
---------------------------------
-
-[ ACCESS DENIED ]
-
-[ SECTOR LOCKED ]
-`,
-
-"08_FINAL/ARCHIVE_NOTE.txt": `
-FINAL ARCHIVE NOTE
-
---------------------------------
-
-The recovered files do not
-represent the complete network.
-
-They represent only the portion
-stored on E-17.
-
-Several names remain hidden.
-
-Several companies remain
-unidentified.
-
-Several political subjects
-have not been connected
-with sufficient evidence.
-
---------------------------------
-
-ARCHIVE STATUS:
-
+KNOWN PURPOSE:
 PARTIAL
 
+FINAL DESTINATION:
+UNKNOWN
+`
+},
+
+
+"04_FINANCIAL_NETWORK/ROUTE_B.txt": {
+ title:"FINANCIAL ROUTE B",
+ type:"MONEY FLOW",
+ level:"HIGH",
+ text:`
+ROUTE B
+
+PRIVATE DONATION
+        ↓
+FOUNDATION
+        ↓
+POLITICAL CONTACT
+        ↓
+CONSULTING COMPANY
+        ↓
+MERIDIAN
+        ↓
+UNKNOWN ACCOUNT
+
 --------------------------------
 
-NEXT RECOVERY TARGET:
+PATTERN IDENTIFIED:
 
-SECTOR 8
+Funds are repeatedly divided
+before reaching the final entity.
+
+--------------------------------
+
+ASSESSMENT:
+
+LAYERED FINANCIAL STRUCTURE
+
+RISK:
+HIGH
 `
+},
+
+
+"04_FINANCIAL_NETWORK/MASTER_INDEX.txt": {
+ title:"MASTER FINANCIAL INDEX",
+ type:"DATABASE INDEX",
+ level:"OMEGA",
+ text:`
+MASTER FINANCIAL INDEX
+
+KNOWN ENTITIES:
+
+27 CORPORATIONS
+14 POLITICAL CONTACTS
+09 FOUNDATIONS
+31 INTERMEDIARY ACCOUNTS
+18 PROPERTY ASSETS
+
+--------------------------------
+
+ESTIMATED NETWORK VALUE:
+
+€2.7B+
+
+--------------------------------
+
+KNOWN ACTIVE ROUTES:
+
+47
+
+UNKNOWN ROUTES:
+
+19
+
+--------------------------------
+
+DATABASE CONCLUSION:
+
+THE NETWORK IS DISTRIBUTED.
+
+NO SINGLE ACCOUNT
+CONTAINS THE COMPLETE STRUCTURE.
+`
+},
+
+
+"05_PERSONNEL/VICTOR_HALE.txt": {
+ title:"VICTOR HALE",
+ type:"FINANCIAL NODE",
+ level:"HIGH",
+ text:`
+SUBJECT:
+VICTOR HALE
+
+STATUS:
+CONTROLLED ASSET
+
+POSITION:
+INVESTOR / BUSINESSMAN
+
+--------------------------------
+
+KNOWN CONNECTIONS
+
+H-47 LOGISTICS
+NORTHSTAR CAPITAL
+HALE FOUNDATION
+
+--------------------------------
+
+ASSESSMENT
+
+Hale received funds connected
+to the network.
+
+Evidence does not establish
+that he created Eclipse.
+
+Four years ago he received
+a threat involving a family member.
+
+Afterward he continued
+signing financial documents.
+
+--------------------------------
+
+CLASSIFICATION:
+
+COMPLICIT THROUGH FEAR
+
+NOT INNOCENT.
+
+NOT A CORE OPERATIVE.
+`
+},
+
+
+"05_PERSONNEL/DANIEL_CROSS.txt": {
+ title:"DANIEL CROSS",
+ type:"ACCOUNTING ANALYST",
+ level:"HIGH",
+ text:`
+SUBJECT:
+DANIEL CROSS
+
+STATUS:
+MISSING
+
+POSITION:
+ACCOUNTING ANALYST
+
+--------------------------------
+
+Cross identified unusual
+financial relationships.
+
+He attempted to preserve
+financial records.
+
+Attempt was detected.
+
+--------------------------------
+
+LAST KNOWN MESSAGE:
+
+"If something happens to me,
+do not believe anyone who says
+Eclipse is only a financial project."
+
+--------------------------------
+
+STATUS:
+
+MISSING / PRESUMED DEAD
+
+CONFIDENCE:
+72%
+`
+},
+
+
+"05_PERSONNEL/ARCHITECT.txt": {
+ title:"ARCHITECT",
+ type:"UNKNOWN EXECUTIVE",
+ level:"OMEGA",
+ text:`
+DESIGNATION:
+ARCHITECT
+
+REAL IDENTITY:
+UNKNOWN
+
+STATUS:
+ACTIVE
+
+--------------------------------
+
+KNOWN CHARACTERISTICS
+
+• operates through intermediaries
+• rarely appears directly
+• uses corporate structures
+• maintains compartmentalized information
+• communicates through encrypted channels
+
+--------------------------------
+
+KNOWN PHRASE:
+
+"NO SINGLE NODE
+KNOWS THE WHOLE SYSTEM."
+
+--------------------------------
+
+THREAT LEVEL:
+
+OMEGA
+
+IDENTITY:
+[REDACTED]
+`
+},
+
+
+"06_ECLIPSE/ORGANIZATION.txt": {
+ title:"ECLIPSE // ORGANIZATIONAL STRUCTURE",
+ type:"ORGANIZATION",
+ level:"OMEGA",
+ text:`
+ECLIPSE
+
+CLASSIFICATION:
+TRANSNATIONAL INFLUENCE NETWORK
+
+--------------------------------
+
+PRIMARY STRUCTURE
+
+FINANCE
+   ↓
+INFORMATION
+   ↓
+INFLUENCE
+   ↓
+DEPENDENCY
+
+--------------------------------
+
+ECLIPSE DOES NOT REQUIRE
+DIRECT CONTROL.
+
+Its objective is to make
+institutions dependent on
+systems controlled by the network.
+
+--------------------------------
+
+CORE PRINCIPLE:
+
+CONTROL THE CONNECTIONS,
+NOT THE INSTITUTIONS.
+`
+},
+
+
+"06_ECLIPSE/NODES.txt": {
+ title:"ECLIPSE // NODE INDEX",
+ type:"NETWORK MAP",
+ level:"OMEGA",
+ text:`
+NODE 01
+FINANCE
+
+LOCATION:
+[REDACTED]
+
+FUNCTION:
+Financial routing
+
+
+NODE 02
+PROPERTY
+
+LOCATION:
+[REDACTED]
+
+FUNCTION:
+Asset concealment
+
+
+NODE 03
+INFORMATION
+
+LOCATION:
+[REDACTED]
+
+FUNCTION:
+Data collection
+
+
+NODE 04
+POLITICAL
+
+LOCATION:
+[REDACTED]
+
+FUNCTION:
+Influence
+
+
+NODE 05
+SECURITY
+
+LOCATION:
+[REDACTED]
+
+FUNCTION:
+Protection / enforcement
+
+
+--------------------------------
+
+TOTAL KNOWN NODES:
+
+19
+
+CONFIRMED:
+
+11
+
+UNKNOWN:
+
+08
+`
+},
+
+
+"07_EVIDENCE/ACCESS_CARDS.txt": {
+ title:"E-17 ACCESS CARDS",
+ type:"PHYSICAL EVIDENCE",
+ level:"CRITICAL",
+ text:`
+RECOVERED:
+
+03 ACCESS CARDS
+
+CARD A
+FACILITY:
+[REDACTED]
+
+CARD B
+FACILITY:
+[REDACTED]
+
+CARD C
+FACILITY:
+[REDACTED]
+
+--------------------------------
+
+ALL THREE CARDS
+SHARE THE SAME ISSUING AUTHORITY.
+
+AUTHORITY:
+
+[REDACTED]
+
+--------------------------------
+
+STATUS:
+
+UNUSED SINCE RECOVERY.
+`
+},
+
+
+"07_EVIDENCE/NUMERIC_LIST.txt": {
+ title:"NUMERIC LIST",
+ type:"EVIDENCE",
+ level:"HIGH",
+ text:`
+RECOVERED LIST:
+
+17
+04
+31
+09
+44
+08
+12
+27
+03
+19
+41
+06
+
+--------------------------------
+
+INITIAL INTERPRETATION:
+
+ACCOUNT NUMBERS
+
+CURRENT INTERPRETATION:
+
+NODE IDENTIFIERS
+
+--------------------------------
+
+CORRELATION:
+
+11 OF 12 NUMBERS MATCH
+KNOWN ECLIPSE NODES.
+
+ONE REMAINS UNKNOWN.
+
+NODE:
+
+44
+
+STATUS:
+
+[REDACTED]
+`
+},
+
+
+"08_BLACK_VEIL/PROJECT_INDEX.txt": {
+ title:"BLACK VEIL // PROJECT INDEX",
+ type:"STRATEGIC PROJECT",
+ level:"OMEGA",
+ text:`
+PROJECT:
+BLACK VEIL
+
+STATUS:
+DEVELOPMENT
+
+--------------------------------
+
+OBJECTIVE
+
+Create widespread institutional
+dependency during a period of
+coordinated uncertainty.
+
+--------------------------------
+
+PRIMARY COMPONENTS
+
+FINANCIAL PRESSURE
+INFORMATION UNCERTAINTY
+POLITICAL DISTRUST
+
+--------------------------------
+
+END STATE
+
+Institutions seek an external
+system capable of restoring
+stability.
+
+ECLIPSE intends to become
+that system.
+
+--------------------------------
+
+FULL PROJECT DATA:
+
+ENCRYPTED
+`
+},
+
+
+"08_BLACK_VEIL/PHASES.txt": {
+ title:"BLACK VEIL // PHASE STRUCTURE",
+ type:"STRATEGIC FILE",
+ level:"OMEGA",
+ text:`
+PHASE 01
+NETWORK CONSTRUCTION
+
+STATUS:
+COMPLETE
+
+
+PHASE 02
+DEPENDENCY
+
+STATUS:
+ACTIVE
+
+
+PHASE 03
+COORDINATED INSTABILITY
+
+STATUS:
+LOCKED
+
+
+PHASE 04
+SYSTEM DEPLOYMENT
+
+STATUS:
+LOCKED
+
+
+PHASE 05
+[REDACTED]
+
+STATUS:
+UNKNOWN
+
+--------------------------------
+
+AUTHORIZED PERSONNEL ONLY.
+`
+},
+
+
+"09_REDACTED/ARCHITECT_MESSAGE.txt": {
+ title:"ARCHITECT // DIRECT MESSAGE",
+ type:"RESTRICTED",
+ level:"OMEGA",
+ text:`
+MESSAGE ID:
+A-0001
+
+--------------------------------
+
+You are looking for corruption.
+
+You are seeing only the surface.
+
+Companies are replaceable.
+
+Politicians are replaceable.
+
+Money is replaceable.
+
+The network is not.
+
+--------------------------------
+
+E-17 was never the objective.
+
+It was a test.
+
+--------------------------------
+
+END MESSAGE.
+`
+},
+
+
+"09_REDACTED/FINAL_RECORD.txt": {
+ title:"FINAL RECORD",
+ type:"OMEGA FILE",
+ level:"OMEGA",
+ text:`
+E-17 FINAL RECORD
+
+--------------------------------
+
+KNOWN:
+
+27 corporate entities
+14 political contacts
+31 financial intermediaries
+19 network nodes
+09 foundations
+
+--------------------------------
+
+UNKNOWN:
+
+ARCHITECT IDENTITY
+
+NODE 44
+
+BLACK VEIL PHASE 03
+
+--------------------------------
+
+FINAL SYSTEM STATUS:
+
+NETWORK:
+ACTIVE
+
+ECLIPSE:
+ACTIVE
+
+BLACK VEIL:
+PENDING
+
+ARCHIVE:
+COMPROMISED
+
+--------------------------------
+
+END OF RECOVERABLE DATA.
+`
+}
+
 };
 
 
-/* =====================================================
+/* =========================================================
    BUILD DIRECTORY
-===================================================== */
+========================================================= */
 
 function buildTree(){
 
  const tree=document.getElementById("tree");
  tree.innerHTML="";
 
- const groups={};
+ const folders={};
 
  Object.keys(DATA).forEach(path=>{
+  const parts=path.split("/");
+  const folder=parts[0];
 
-  const folder=path.split("/")[0];
-
-  if(!groups[folder]){
-   groups[folder]=[];
-  }
-
-  groups[folder].push(path);
-
+  if(!folders[folder]) folders[folder]=[];
+  folders[folder].push(path);
  });
 
-
- Object.entries(groups).forEach(([folder,files])=>{
+ Object.entries(folders).forEach(([folder,files])=>{
 
   const box=document.createElement("div");
   box.className="folder";
@@ -1781,83 +1805,69 @@ function buildTree(){
   name.className="folderName";
   name.textContent="▾ "+folder;
 
-  const container=document.createElement("div");
-  container.className="files";
+  const list=document.createElement("div");
 
   name.onclick=()=>{
-
-   if(container.style.display==="none"){
-
-    container.style.display="block";
-    name.textContent="▾ "+folder;
-
-   }else{
-
-    container.style.display="none";
-    name.textContent="▸ "+folder;
-
-   }
-
+   const hidden=list.style.display==="none";
+   list.style.display=hidden?"block":"none";
+   name.textContent=(hidden?"▾ ":"▸ ")+folder;
   };
 
+  box.appendChild(name);
 
   files.forEach(path=>{
 
-   const file=document.createElement("div");
-   file.className="file";
+   const f=document.createElement("div");
+   f.className="file";
 
-   file.textContent=
-    "▣ "+path.split("/").slice(1).join("/");
+   f.textContent="▣ "+path.split("/").slice(1).join("/");
 
-   file.onclick=()=>{
+   f.onclick=()=>{
 
-    document
-     .querySelectorAll(".file")
-     .forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".file")
+    .forEach(x=>x.classList.remove("active"));
 
-    file.classList.add("active");
+    f.classList.add("active");
 
     openFile(path);
-
    };
 
-   container.appendChild(file);
-
+   list.appendChild(f);
   });
 
-
-  box.appendChild(name);
-  box.appendChild(container);
+  box.appendChild(list);
   tree.appendChild(box);
-
  });
-
 }
 
 
-/* =====================================================
-   OPEN FILE
-===================================================== */
+/* =========================================================
+   OPEN RECORD
+========================================================= */
 
 function openFile(path){
 
- const content=DATA[path];
+ const record=DATA[path];
 
- document.getElementById("path")
-  .textContent="/E-17/"+path;
+ document.getElementById("path").textContent="/E-17/"+path;
 
- document.getElementById("viewerTitle")
-  .textContent=path.split("/").pop();
+ document.getElementById("fileTitle").textContent=record.title;
 
- document.getElementById("content")
-  .textContent=content;
+ document.getElementById("content").textContent=record.text;
 
+ const meta=document.getElementById("fileMeta");
+
+ meta.innerHTML=`
+  <span class="tag">TYPE: ${record.type}</span>
+  <span class="tag">CLEARANCE: ${record.level}</span>
+  <span class="tag">STATUS: VERIFIED</span>
+ `;
 }
 
 
-/* =====================================================
+/* =========================================================
    UNLOCK
-===================================================== */
+========================================================= */
 
 function unlock(){
 
@@ -1868,56 +1878,47 @@ function unlock(){
 
   error.textContent="";
 
-  document.getElementById("lockScreen")
-   .style.display="none";
+  document.getElementById("lockScreen").style.display="none";
 
-  document.getElementById("archive")
-   .style.display="block";
+  document.getElementById("archive").style.display="block";
 
-  document.getElementById("systemStatus")
-   .textContent="● SSD MOUNTED — READ ONLY";
+  document.getElementById("systemStatus").textContent=
+   "● SSD MOUNTED — DECRYPTION COMPLETE — READ ONLY";
 
   buildTree();
 
-  setTimeout(()=>{
+  const first=document.querySelector(".file");
 
-   const first=document.querySelector(".file");
-
-   if(first){
-    first.click();
-   }
-
-  },300);
+  if(first){
+   first.classList.add("active");
+   openFile(first.parentElement.parentElement
+    ? Object.keys(DATA)[0]
+    : Object.keys(DATA)[0]);
+  }
 
  }else{
 
   error.textContent=
-   "ACCESS DENIED — INVALID ARCHIVE KEY";
+   "ACCESS DENIED // INVALID ARCHIVE KEY";
 
   input.value="";
   input.focus();
-
  }
-
 }
 
 
-/* =====================================================
-   EVENTS
-===================================================== */
+/* =========================================================
+   BUTTON + ENTER
+========================================================= */
 
 document
- .getElementById("unlock")
+ .getElementById("unlockButton")
  .addEventListener("click",unlock);
 
 document
  .getElementById("password")
  .addEventListener("keydown",e=>{
-
-  if(e.key==="Enter"){
-   unlock();
-  }
-
+  if(e.key==="Enter") unlock();
  });
 
 </script>
