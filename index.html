@@ -1,82 +1,1165 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>E-17 SECURE ARCHIVE</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#05070a;color:#dbe3e9;font-family:-apple-system,BlinkMacSystemFont,"SFMono-Regular",monospace}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);background-size:100% 4px;opacity:.35}
-.app{max-width:900px;margin:auto;padding:22px 16px}.top{border:1px solid #27313a;background:#0a0e12;border-radius:14px;padding:20px;box-shadow:0 12px 35px #0008}
-.logo{font-size:22px;letter-spacing:3px;color:#fff}.meta{font-size:10px;color:#72808b;margin-top:8px}.status{font-size:10px;color:#66e19a;margin-top:14px}
-.lock{max-width:540px;margin:70px auto}.panel{border:1px solid #27313a;background:#0a0e12;border-radius:14px;padding:22px}
-.label{font-size:10px;color:#82909a}.key{width:100%;height:54px;margin-top:12px;border-radius:10px;border:1px solid #3b4852;background:#05070a;color:#fff;padding:0 14px;font:15px monospace;outline:0}.key:focus{border-color:#66e19a}
-.err{height:24px;color:#ff5964;font-size:10px;padding-top:10px}.hint{font-size:9px;color:#65717b;margin-top:12px}
-#archive{display:none;margin-top:16px}.access{border:1px solid #315c43;background:#0a1710;color:#66e19a;border-radius:10px;padding:13px;font-size:10px}
-.grid{display:grid;grid-template-columns:260px 1fr;margin-top:12px;border:1px solid #27313a;border-radius:12px;overflow:hidden;background:#080b0f}.tree{padding:12px;border-right:1px solid #27313a}.viewer{padding:18px;min-height:480px}.folder{color:#66e19a;padding:10px 6px;font-size:11px}.file{padding:8px 8px 8px 22px;color:#cbd5dd;font-size:11px;cursor:pointer;border-radius:6px}.file:hover{background:#121920}.path{font-size:10px;color:#68757f;border-bottom:1px solid #27313a;padding-bottom:12px}.viewer pre{white-space:pre-wrap;font:12px/1.7 monospace;color:#ccd6de}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.tree{border-right:0;border-bottom:1px solid #27313a}.viewer{min-height:350px}}
+:root{
+--bg:#05070a;
+--panel:#0b0f14;
+--panel2:#0e141a;
+--border:#26313a;
+--green:#63e6a0;
+--text:#e8eef2;
+--muted:#7d8992;
+--red:#ff5964;
+--yellow:#e6c75a;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+margin:0;padding:0;min-height:100%;
+background:var(--bg);color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"SFMono-Regular",Menlo,Consolas,monospace
+}
+body{overflow-x:hidden}
+body:before{
+content:"";position:fixed;inset:0;pointer-events:none;z-index:999;
+background:repeating-linear-gradient(to bottom,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 4px);
+opacity:.28
+}
+.app{width:100%;max-width:1100px;margin:auto;padding:18px}
+.header{
+border:1px solid var(--border);
+background:linear-gradient(145deg,#0c1116,#080b0f);
+border-radius:18px;padding:20px;
+box-shadow:0 15px 50px rgba(0,0,0,.5)
+}
+.header-top{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.logo{font-size:22px;font-weight:700;letter-spacing:3px;color:#fff}
+.classification{
+color:var(--green);font-size:9px;border:1px solid rgba(99,230,160,.3);
+padding:6px 9px;border-radius:6px;letter-spacing:1px
+}
+.meta{color:var(--muted);font-size:9px;margin-top:10px;letter-spacing:.7px}
+.status{margin-top:16px;font-size:10px;color:var(--green)}
+
+.lock-screen{max-width:570px;margin:75px auto}
+.login-panel{
+border:1px solid var(--border);background:var(--panel);
+border-radius:18px;padding:28px;
+box-shadow:0 25px 70px rgba(0,0,0,.55)
+}
+.lock-icon{
+width:58px;height:58px;border-radius:50%;
+border:1px solid #31404a;display:flex;align-items:center;
+justify-content:center;margin-bottom:22px;color:var(--green);font-size:25px
+}
+.login-title{font-size:15px;font-weight:bold;letter-spacing:1px}
+.login-subtitle{color:var(--muted);font-size:10px;margin-top:7px;line-height:1.7}
+.input-label{display:block;margin-top:24px;color:#8c99a3;font-size:9px;letter-spacing:1px}
+.password{
+width:100%;height:54px;margin-top:9px;padding:0 15px;
+border-radius:10px;border:1px solid #35434d;
+background:#05080b;color:#fff;font-family:monospace;font-size:14px;outline:none
+}
+.password:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(99,230,160,.07)}
+.login-button{
+width:100%;height:50px;margin-top:14px;border:1px solid #357e58;
+border-radius:10px;background:#102219;color:var(--green);
+font-family:monospace;font-weight:bold;cursor:pointer
+}
+.error{min-height:24px;margin-top:9px;color:var(--red);font-size:9px}
+.hint{margin-top:15px;color:#58656e;font-size:8px;line-height:1.6}
+
+#archive{display:none;margin-top:18px}
+.access{
+border:1px solid rgba(99,230,160,.35);
+background:#091710;color:var(--green);
+border-radius:12px;padding:14px 16px;font-size:10px
+}
+.dashboard{
+display:grid;grid-template-columns:repeat(4,1fr);
+gap:10px;margin-top:12px
+}
+.stat{
+border:1px solid var(--border);background:var(--panel);
+border-radius:12px;padding:14px
+}
+.stat-label{color:#65727c;font-size:8px}
+.stat-value{color:#e7edf0;font-size:15px;margin-top:7px}
+.stat-green{color:var(--green)}
+
+.archive-window{
+display:grid;grid-template-columns:280px 1fr;
+margin-top:12px;border:1px solid var(--border);
+border-radius:16px;overflow:hidden;background:#080c10;
+box-shadow:0 20px 60px rgba(0,0,0,.4)
+}
+.sidebar{background:#080c10;border-right:1px solid var(--border);padding:14px}
+.sidebar-title{color:#64717a;font-size:8px;letter-spacing:1.5px;padding:5px 7px 13px}
+.folder{margin-top:5px}
+.folder-name{
+color:var(--green);padding:10px 8px;font-size:10px;
+border-radius:7px;cursor:pointer
+}
+.folder-name:hover{background:#10171c}
+.file{
+color:#cbd5dc;font-size:9px;padding:9px 7px 9px 25px;
+border-radius:7px;cursor:pointer;line-height:1.3
+}
+.file:hover{background:#11191f;color:#fff}
+.file.active{background:#14231b;color:var(--green)}
+
+.viewer{
+min-height:620px;padding:20px;
+background:radial-gradient(circle at 80% 10%,rgba(80,220,140,.025),transparent 35%),#090d11
+}
+.viewer-header{
+display:flex;align-items:center;justify-content:space-between;
+gap:10px;padding-bottom:14px;border-bottom:1px solid var(--border)
+}
+.path{color:#71808a;font-size:9px;word-break:break-all}
+.file-status{color:var(--green);font-size:8px;white-space:nowrap}
+.viewer-title{font-size:17px;margin-top:22px;color:#fff}
+.viewer-content{
+margin-top:18px;color:#c8d2d9;font-size:11px;
+line-height:1.85;white-space:pre-wrap;word-break:break-word
+}
+.warning{
+margin-top:25px;border-left:2px solid var(--yellow);
+padding:12px;background:#151309;color:#cbbb72;
+font-size:9px;line-height:1.6
+}
+.footer{
+margin-top:14px;text-align:center;color:#3f4b53;
+font-size:8px;padding:15px
+}
+
+@media(max-width:750px){
+.app{padding:10px}
+.header{border-radius:14px;padding:16px}
+.logo{font-size:17px;letter-spacing:2px}
+.classification{display:none}
+.dashboard{grid-template-columns:repeat(2,1fr)}
+.archive-window{grid-template-columns:1fr}
+.sidebar{border-right:0;border-bottom:1px solid var(--border)}
+.viewer{min-height:500px}
+.login-panel{padding:22px}
+.lock-screen{margin:45px auto}
+}
 </style>
 </head>
+
 <body>
 <div class="app">
-<div class="top">
+
+<div class="header">
+<div class="header-top">
 <div class="logo">E-17 SECURE ARCHIVE</div>
-<div class="meta">FORENSIC STORAGE MEDIA // CLASSIFICATION: BLACK // LOCAL ARCHIVE</div>
-<div id="status" class="status">● DEVICE LOCKED</div>
+<div class="classification">BLACK // EYES ONLY</div>
+</div>
+<div class="meta">
+FORENSIC STORAGE MEDIA // ARCHIVE NODE E-17 // LOCAL READ-ONLY INSTANCE
+</div>
+<div id="systemStatus" class="status">● DEVICE LOCKED</div>
 </div>
 
-<div id="lock" class="lock">
-<div class="panel">
-<div class="label">AUTHENTICATION REQUIRED</div>
-<input id="key" class="key" type="password" autocomplete="off" placeholder="Enter archive key">
-<div id="err" class="err"></div>
-<div class="hint">Enter the complete archive key. The archive will mount automatically.</div>
+<div id="lockScreen" class="lock-screen">
+<div class="login-panel">
+
+<div class="lock-icon">⌾</div>
+
+<div class="login-title">SECURE ARCHIVE AUTHENTICATION</div>
+
+<div class="login-subtitle">
+Encrypted storage detected.<br>
+Authorized credentials required to mount archive.
+</div>
+
+<label class="input-label">ARCHIVE ACCESS KEY</label>
+
+<input id="password"
+class="password"
+type="password"
+placeholder="Enter access key"
+autocomplete="off"
+autocapitalize="none"
+spellcheck="false">
+
+<button id="unlockButton" class="login-button">
+MOUNT ARCHIVE
+</button>
+
+<div id="error" class="error"></div>
+
+<div class="hint">
+SECURITY LEVEL: BLACK<br>
+FAILED ATTEMPTS ARE LOGGED LOCALLY.
+</div>
+
 </div>
 </div>
 
 <div id="archive">
-<div class="access">● ACCESS GRANTED — ARCHIVE MOUNTED — READ ONLY</div>
-<div class="grid"><div id="tree" class="tree"></div>
-<div class="viewer"><div id="path" class="path">/E-17/ Select a file</div><pre id="content">Archive decrypted. Select a recovered file.</pre></div></div>
+
+<div class="access">
+● ACCESS GRANTED — ARCHIVE MOUNTED — READ ONLY
+</div>
+
+<div class="dashboard">
+
+<div class="stat">
+<div class="stat-label">ARCHIVE</div>
+<div class="stat-value stat-green">E-17</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">CLASSIFICATION</div>
+<div class="stat-value">BLACK</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">FILES</div>
+<div class="stat-value" id="fileCount">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">STATUS</div>
+<div class="stat-value stat-green">READ ONLY</div>
+</div>
+
+</div>
+
+<div class="archive-window">
+
+<aside class="sidebar">
+<div class="sidebar-title">ARCHIVE DIRECTORY</div>
+<div id="tree"></div>
+</aside>
+
+<main class="viewer">
+
+<div class="viewer-header">
+<div id="path" class="path">/E-17/ Select a file</div>
+<div class="file-status">VERIFIED</div>
+</div>
+
+<div id="viewerTitle" class="viewer-title">
+Archive Mounted
+</div>
+
+<div id="viewerContent" class="viewer-content">
+E-17 archive successfully decrypted.
+
+Select a file from the archive directory
+to inspect recovered intelligence.
+</div>
+
+<div id="warning" class="warning">
+ARCHIVE NOTICE:<br>
+Some records remain partially redacted.
+Additional sectors may become available during PHASE TWO.
+</div>
+
+</main>
+</div>
+
+<div class="footer">
+E-17 // SECTOR 8 // INTERNAL ARCHIVE
+<br>
+FICTIONAL ARCHIVE — SEASON ONE
+</div>
+
 </div>
 </div>
 
 <script>
+
 const PASSWORD="E17-SECURITY-ARCHIVE-8F3A-2026";
+
 const DATA={
-"00_SYSTEM/BOOT_NOTICE.txt":"E-17 SECURE ARCHIVE\\nAUTHENTICATION REQUIRED\\nDECRYPTED DATA: 37%\\nREMAINING SECTORS: LOCKED\\n",
-"01_PROJECT/ECLIPSE_OVERVIEW.txt":"PROJECT ECLIPSE\\nCLASSIFICATION: BLACK\\n\\nEclipse is a distributed dependency architecture built around capital, information and influence.\\nNo single company or person represents the complete structure.\\n",
-"02_FINANCE/H47_ROUTE.txt":"FINANCIAL ROUTE / PARTIAL\\n\\nH-47 LOGISTICS\\n  -> MERIDIAN PROPERTY GROUP\\n  -> NORTHSTAR CAPITAL\\n  -> HALE FOUNDATION\\n\\nIndividual routing data remains restricted.\\n",
-"03_SUBJECTS/SUBJECT_08.txt":"SUBJECT GROUP 08\\n\\n01 RAAD — coordination\\n02 NOAH — analysis\\n03 YAZAN — technical\\n04 SAIF — surveillance\\n05 HAMZA — field operations\\n06 KAIN — operations\\n07 MALIK — logistics\\n08 [REDACTED]\\n\\nDIRECTIVE: OBSERVE. DO NOT ELIMINATE.\\n",
-"04_HALE/VICTOR_HALE.txt":"VICTOR HALE\\nSTATUS: CONTROLLED ASSET\\nKNOWLEDGE: LIMITED\\n\\nHale is not classified as an operative.\\n",
-"05_CROSS/DANIEL_CROSS.txt":"DANIEL CROSS\\nPOSITION: ACCOUNTING ANALYST\\nSTATUS: TERMINATED\\n\\nCross detected irregular financial relationships before disappearing.\\n",
-"06_INCIDENTS/E17_EXTRACTION.txt":"INCIDENT E-17\\n\\nObjective: controlled removal of E-17 from secure custody.\\nPurpose: observation of independent actors.\\nRESULT: PHASE ONE SUCCESSFUL.\\n",
-"07_OBSERVATION/PHASE_ONE.txt":"PHASE ONE\\n\\nDAY 21 — H-47 identified.\\nDAY 37 — Hale/security relationship identified.\\nDAY 44 — partial ECLIPSE structure identified.\\n\\nASSESSMENT: PASS\\n",
-"08_BLACK_VEIL/INDEX.txt":"BLACK VEIL\\nCLASSIFICATION: OMEGA\\n\\nA crisis architecture designed around uncertainty and dependency.\\nFULL IMPLEMENTATION DATA: LOCKED\\n",
-"09_PHASE_TWO/NOTICE.txt":"PHASE TWO\\nSTATUS: ACTIVE\\n\\nPRIMARY OBJECTIVE: RETURN SUBJECT GROUP 08 TO CITY ONE.\\nDIRECTIVE: DO NOT ELIMINATE SUBJECT GROUP 08.\\n",
-"10_FINAL/READ_AFTER_PHASE_ONE.txt":"FINAL MESSAGE\\n\\nYou believe you stole E-17.\\nYou did not.\\n\\nPHASE TWO HAS BEGUN.\\n\\nEND OF AVAILABLE ARCHIVE\\n"
+
+"00_SYSTEM/BOOT_NOTICE.txt":`
+E-17 SECURE ARCHIVE
+
+ARCHIVE STATUS:
+MOUNTED
+
+CLASSIFICATION:
+BLACK
+
+STORAGE:
+FORENSIC SSD
+
+MODE:
+READ ONLY
+
+--------------------------------
+
+BOOT NOTICE
+
+This storage device was recovered
+during the E-17 extraction incident.
+
+Several sectors remain encrypted.
+
+AUTHORIZED ACCESS ONLY.
+
+--------------------------------
+
+SYSTEM MESSAGE:
+
+If you are reading this file,
+the archive has successfully mounted.
+`,
+
+"01_PROJECT/ECLIPSE_OVERVIEW.txt":`
+PROJECT ECLIPSE
+
+CLASSIFICATION:
+BLACK
+
+STATUS:
+ACTIVE
+
+--------------------------------
+
+Eclipse is not a conventional organization.
+
+It operates through a distributed
+network of financial entities,
+information systems and influence channels.
+
+No single company represents the complete structure.
+
+No single individual controls the entire network.
+
+--------------------------------
+
+PRIMARY COMPONENTS:
+
+01 — FINANCE
+02 — INFORMATION
+03 — INFLUENCE
+
+--------------------------------
+
+FINAL ARCHITECTURE:
+
+BLACK VEIL
+
+STATUS:
+RESTRICTED
+`,
+
+"02_FINANCE/H47_ROUTE.txt":`
+FINANCIAL ROUTE // H-47
+
+PARTIAL RECOVERY
+
+--------------------------------
+
+H-47 LOGISTICS
+
+Classification:
+FRONT ENTITY
+
+Observed financial volume:
+INCONSISTENT WITH DECLARED BUSINESS
+
+--------------------------------
+
+ROUTING:
+
+H-47 LOGISTICS
+        ↓
+MERIDIAN PROPERTY GROUP
+        ↓
+NORTHSTAR CAPITAL
+        ↓
+HALE FOUNDATION
+
+--------------------------------
+
+TRANSFER PATTERN:
+
+Repeated transactions.
+Small individual amounts.
+High frequency.
+
+Purpose:
+UNCONFIRMED
+
+--------------------------------
+
+ARCHIVE NOTE:
+
+FUNDS ACCEPTED —
+PURPOSE UNKNOWN
+`,
+
+"02_FINANCE/CORRUPTION_PATTERN.txt":`
+FINANCIAL IRREGULARITIES
+
+--------------------------------
+
+PATTERN IDENTIFIED:
+
+Company A
+    ↓
+Company B
+    ↓
+Company C
+    ↓
+Foundation
+    ↓
+UNKNOWN DESTINATION
+
+--------------------------------
+
+OBSERVED CHARACTERISTICS:
+
+• repeated transfers
+• multiple jurisdictions
+• intermediary companies
+• unclear commercial purpose
+• legitimate documentation
+• inconsistent declared activity
+
+--------------------------------
+
+ASSESSMENT:
+
+STRUCTURED FINANCIAL OBFUSCATION
+
+CONFIDENCE:
+87%
+`,
+
+"03_SUBJECTS/SUBJECT_08.txt":`
+SUBJECT GROUP 08
+
+--------------------------------
+
+SUBJECT 01
+RAAD
+ROLE:
+COORDINATION
+
+--------------------------------
+
+SUBJECT 02
+NOAH
+ROLE:
+ANALYSIS
+
+--------------------------------
+
+SUBJECT 03
+YAZAN
+ROLE:
+TECHNICAL
+
+--------------------------------
+
+SUBJECT 04
+SAIF
+ROLE:
+SURVEILLANCE
+
+--------------------------------
+
+SUBJECT 05
+HAMZA
+ROLE:
+FIELD OPERATIONS
+
+--------------------------------
+
+SUBJECT 06
+KAIN
+ROLE:
+OPERATIONS
+
+--------------------------------
+
+SUBJECT 07
+MALIK
+ROLE:
+LOGISTICS
+
+STATUS:
+DECEASED
+
+--------------------------------
+
+SUBJECT 08
+[REDACTED]
+
+--------------------------------
+
+DIRECTIVE:
+
+OBSERVE.
+DO NOT ELIMINATE.
+
+EXCEPTION:
+
+MALIK
+REMOVE IF NECESSARY.
+`,
+
+"03_SUBJECTS/SURVEILLANCE_LOG.txt":`
+SUBJECT GROUP 08
+
+OBSERVATION LOG
+
+--------------------------------
+
+DAY 01
+Subjects entered City Two.
+
+DAY 04
+Temporary residence identified.
+
+DAY 14
+Vehicle surveillance initiated.
+
+DAY 21
+H-47 identified by subjects.
+
+DAY 37
+Victor Hale connection discovered.
+
+DAY 44
+Partial Eclipse structure exposed.
+
+--------------------------------
+
+ASSESSMENT:
+
+SUBJECT GROUP 08 CONTINUES
+TO INVESTIGATE.
+
+NO INTERVENTION.
+`,
+
+"04_HALE/VICTOR_HALE.txt":`
+VICTOR HALE
+
+STATUS:
+CONTROLLED ASSET
+
+CLASSIFICATION:
+FINANCIAL NODE
+
+--------------------------------
+
+KNOWN ACTIVITIES:
+
+• investment management
+• corporate ownership
+• financial transfers
+• intermediary relationships
+
+--------------------------------
+
+ASSESSMENT:
+
+Hale is not classified
+as an Eclipse operative.
+
+He possesses partial knowledge
+of the network.
+
+--------------------------------
+
+PERSONAL INCIDENT:
+
+Approximately four years ago,
+Hale received a threat involving
+a family member.
+
+Following the incident,
+financial instructions continued
+without question.
+
+--------------------------------
+
+FINAL ASSESSMENT:
+
+COMPLICIT THROUGH FEAR.
+
+NOT INNOCENT.
+NOT FULLY OPERATIVE.
+`,
+
+"05_CROSS/DANIEL_CROSS.txt":`
+DANIEL CROSS
+
+POSITION:
+ACCOUNTING ANALYST
+
+STATUS:
+MISSING
+
+--------------------------------
+
+Cross detected irregular
+financial relationships.
+
+He attempted to copy
+accounting records to a
+personal email account.
+
+The attempt failed.
+
+The system retained
+the access log.
+
+--------------------------------
+
+LAST KNOWN ACCESS:
+
+VICTOR HALE
+FINANCIAL OFFICE
+
+--------------------------------
+
+MESSAGE RECOVERED:
+
+"If something happens to me,
+do not believe anyone who says
+Eclipse is only a financial project."
+
+--------------------------------
+
+STATUS:
+
+UNRESOLVED.
+`,
+
+"06_INCIDENTS/E17_EXTRACTION.txt":`
+INCIDENT E-17
+
+--------------------------------
+
+TIME:
+03:12
+
+LOCATION:
+FINANCIAL FACILITY
+
+OBJECTIVE:
+E-17 STORAGE UNIT
+
+--------------------------------
+
+RECOVERED ITEMS:
+
+• encrypted SSD
+• document
+• three access cards
+• numeric list
+• metallic key
+
+--------------------------------
+
+IMPORTANT:
+
+The extraction team believed
+the primary objective was money.
+
+Assessment indicates otherwise.
+
+--------------------------------
+
+SECONDARY RESPONSE:
+
+Two unidentified personnel
+entered the facility before
+standard police response.
+
+Objective:
+
+E-17.
+
+NOT CASH.
+
+--------------------------------
+
+CONCLUSION:
+
+THE SSD WAS THE REAL TARGET.
+`,
+
+"06_INCIDENTS/MALIK_INCIDENT.txt":`
+INCIDENT:
+MALIK
+
+STATUS:
+DECEASED
+
+--------------------------------
+
+SUBJECT GROUP 08 attempted
+server access.
+
+Warning received:
+
+"DO NOT TRUST THE DRIVER."
+
+Warning was dismissed.
+
+Vehicle entered the target area.
+
+An attack occurred.
+
+The attack was directed
+primarily toward Malik.
+
+--------------------------------
+
+BACKGROUND:
+
+Malik previously worked
+for a transportation company.
+
+The company was later
+identified as an Eclipse
+front entity.
+
+--------------------------------
+
+MALIK HAD RECORDED:
+
+A shipment number.
+
+The record was stored
+on an old mobile device.
+
+--------------------------------
+
+ASSESSMENT:
+
+MALIK WAS NOT THE PRIMARY
+TARGET BY CHANCE.
+
+HE HAD BEEN IDENTIFIED
+BEFORE THE INCIDENT.
+`,
+
+"07_OBSERVATION/PHASE_ONE.txt":`
+PHASE ONE
+
+STATUS:
+COMPLETED
+
+--------------------------------
+
+OBJECTIVE:
+
+Observe Subject Group 08.
+
+Measure their ability to:
+
+• identify financial routes
+• discover Eclipse nodes
+• establish relationships
+• locate information
+• expose weaknesses
+
+--------------------------------
+
+RESULT:
+
+SUBJECT GROUP 08
+SUCCESSFULLY IDENTIFIED
+MULTIPLE STRUCTURAL WEAKNESSES.
+
+--------------------------------
+
+FINAL ASSESSMENT:
+
+PASS.
+
+--------------------------------
+
+NOTE:
+
+The subjects believe they
+stole E-17.
+
+They did not.
+
+E-17 was deliberately
+allowed to leave secure custody.
+`,
+
+"07_OBSERVATION/CAMERA_RECORDS.txt":`
+SURVEILLANCE RECORD
+
+SOURCE:
+CITY ONE SECURITY NETWORK
+
+--------------------------------
+
+EVENT:
+
+INITIAL EXTRACTION
+
+AVAILABLE DATA:
+
+• camera positions
+• movement patterns
+• vehicle routes
+• subject faces
+• entry times
+• exit times
+
+--------------------------------
+
+ARCHIVE NOTE:
+
+SUBJECT GROUP 08 WAS OBSERVED
+BEFORE THEY KNEW THEY WERE
+BEING OBSERVED.
+
+--------------------------------
+
+QUESTION:
+
+WHO AUTHORIZED THE OPERATION?
+
+ANSWER:
+
+ARCHITECTS.
+`,
+
+"08_BLACK_VEIL/INDEX.txt":`
+BLACK VEIL
+
+CLASSIFICATION:
+OMEGA
+
+STATUS:
+DEVELOPMENT
+
+--------------------------------
+
+OBJECTIVE:
+
+Create a global environment
+of uncertainty and dependency.
+
+Not mass destruction.
+
+Not conventional warfare.
+
+DEPENDENCY.
+
+--------------------------------
+
+MODEL:
+
+Financial instability
+        +
+Information uncertainty
+        +
+Political distrust
+        =
+Institutional dependency
+
+--------------------------------
+
+FINAL STAGE:
+
+ECLIPSE PRESENTS ITSELF
+AS THE SOLUTION.
+
+--------------------------------
+
+IMPLEMENTATION DATA:
+
+LOCKED.
+`,
+
+"08_BLACK_VEIL/CORRUPTION_NETWORK.txt":`
+INFLUENCE NETWORK
+
+--------------------------------
+
+TARGET AREAS:
+
+FINANCE
+GOVERNMENT
+CORPORATE STRUCTURES
+INFORMATION SYSTEMS
+
+--------------------------------
+
+METHOD:
+
+Create dependency.
+
+Acquire information.
+
+Control access.
+
+Influence decisions.
+
+--------------------------------
+
+IMPORTANT:
+
+No single event is sufficient
+to expose the entire network.
+
+The system is distributed.
+
+--------------------------------
+
+FAILURE OF ONE NODE:
+
+PROJECT CONTINUES.
+`,
+
+"09_PHASE_TWO/NOTICE.txt":`
+PHASE TWO
+
+STATUS:
+ACTIVE
+
+--------------------------------
+
+PRIMARY OBJECTIVE:
+
+RETURN SUBJECT GROUP 08
+TO CITY ONE.
+
+--------------------------------
+
+DIRECTIVE:
+
+DO NOT ELIMINATE
+SUBJECT GROUP 08.
+
+--------------------------------
+
+REASON:
+
+Their investigation remains valuable.
+
+--------------------------------
+
+SECONDARY OBJECTIVE:
+
+Determine whether subjects
+understand their true role.
+
+--------------------------------
+
+STATUS:
+
+MONITORING.
+`,
+
+"09_PHASE_TWO/RETURN_ORDER.txt":`
+RETURN ORDER
+
+--------------------------------
+
+CITY TWO:
+OBSERVATION COMPLETE
+
+CITY ONE:
+REACTIVATION REQUIRED
+
+--------------------------------
+
+SUBJECTS MUST RETURN
+WITHOUT DIRECT FORCE.
+
+Preferred method:
+
+ENVIRONMENTAL PRESSURE.
+
+--------------------------------
+
+EXPECTED RESULT:
+
+SUBJECTS CHOOSE
+TO RETURN THEMSELVES.
+`,
+
+"10_FINAL/READ_AFTER_PHASE_ONE.txt":`
+FINAL MESSAGE
+
+--------------------------------
+
+You believe you stole E-17.
+
+You did not.
+
+You were given E-17.
+
+You were watched.
+
+You were measured.
+
+You were tested.
+
+--------------------------------
+
+MALIK'S DEATH:
+
+UNEXPECTED.
+
+BUT USEFUL.
+
+--------------------------------
+
+PHASE ONE:
+
+COMPLETE.
+
+--------------------------------
+
+PHASE TWO:
+
+BEGINNING.
+
+--------------------------------
+
+END OF AVAILABLE ARCHIVE.
+`,
+
+"10_FINAL/BLACK_SCREEN.txt":`
+SECTOR 8
+
+--------------------------------
+
+PHASE TWO HAS BEGUN.
+
+--------------------------------
+
+[ CONNECTION TERMINATED ]
+
+[ SIGNAL LOST ]
+
+[ ARCHIVE CLOSED ]
+`
 };
 
-function mount(){
- const tree=document.getElementById("tree"); tree.innerHTML="";
- const groups={};
- Object.keys(DATA).forEach(p=>{const f=p.split("/")[0];(groups[f]??=[]).push(p)});
- Object.entries(groups).forEach(([folder,paths])=>{
-  const h=document.createElement("div");h.className="folder";h.textContent="▾ "+folder;tree.appendChild(h);
-  paths.forEach(p=>{const el=document.createElement("div");el.className="file";el.textContent="▣ "+p.split("/").slice(1).join("/");el.onclick=()=>openFile(p);tree.appendChild(el)})
- })
+function buildArchive(){
+
+const tree=document.getElementById("tree");
+tree.innerHTML="";
+
+const groups={};
+
+Object.keys(DATA).forEach(path=>{
+const folder=path.split("/")[0];
+if(!groups[folder])groups[folder]=[];
+groups[folder].push(path);
+});
+
+document.getElementById("fileCount").textContent=
+Object.keys(DATA).length;
+
+Object.entries(groups).forEach(([folder,files])=>{
+
+const box=document.createElement("div");
+box.className="folder";
+
+const name=document.createElement("div");
+name.className="folder-name";
+name.textContent="▾ "+folder;
+
+const container=document.createElement("div");
+container.className="folder-files";
+
+name.onclick=()=>{
+if(container.style.display==="none"){
+container.style.display="block";
+name.textContent="▾ "+folder;
+}else{
+container.style.display="none";
+name.textContent="▸ "+folder;
 }
-function openFile(p){document.getElementById("path").textContent="/E-17/"+p;document.getElementById("content").textContent=DATA[p]}
-function check(){
- const v=document.getElementById("key").value.trim(),e=document.getElementById("err");
- if(v===PASSWORD){
-  document.getElementById("lock").style.display="none";
-  document.getElementById("archive").style.display="block";
-  document.getElementById("status").textContent="● ARCHIVE MOUNTED";
-  mount();
- } else if(v.length>=PASSWORD.length){e.textContent="ACCESS DENIED — INVALID ARCHIVE KEY"}
+};
+
+box.appendChild(name);
+
+files.forEach(path=>{
+
+const file=document.createElement("div");
+file.className="file";
+file.textContent="▣ "+path.split("/").slice(1).join("/");
+
+file.onclick=()=>{
+document.querySelectorAll(".file")
+.forEach(x=>x.classList.remove("active"));
+
+file.classList.add("active");
+openFile(path);
+};
+
+container.appendChild(file);
+});
+
+box.appendChild(container);
+tree.appendChild(box);
+});
 }
-document.getElementById("key").addEventListener("input",check);
-document.getElementById("key").addEventListener("change",check);
+
+function openFile(path){
+
+document.getElementById("path").textContent="/E-17/"+path;
+document.getElementById("viewerTitle").textContent=path.split("/").pop();
+document.getElementById("viewerContent").textContent=DATA[path];
+document.getElementById("warning").style.display="block";
+}
+
+function unlock(){
+
+const input=document.getElementById("password");
+const error=document.getElementById("error");
+
+if(input.value.trim()===PASSWORD){
+
+error.textContent="";
+document.getElementById("lockScreen").style.display="none";
+document.getElementById("archive").style.display="block";
+
+document.getElementById("systemStatus").textContent=
+"● ARCHIVE MOUNTED — READ ONLY";
+
+buildArchive();
+
+setTimeout(()=>{
+const first=document.querySelector(".file");
+if(first)first.click();
+},300);
+
+}else{
+
+error.textContent="ACCESS DENIED — INVALID ARCHIVE KEY";
+input.value="";
+input.focus();
+}
+}
+
+document.getElementById("unlockButton")
+.addEventListener("click",unlock);
+
+document.getElementById("password")
+.addEventListener("keydown",e=>{
+if(e.key==="Enter")unlock();
+});
+
 </script>
 </body>
 </html>
