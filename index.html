@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>E-17 SECURE ARCHIVE</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#05070a;color:#dbe3e9;font-family:-apple-system,BlinkMacSystemFont,"SFMono-Regular",monospace}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);background-size:100% 4px;opacity:.35}
+.app{max-width:900px;margin:auto;padding:22px 16px}.top{border:1px solid #27313a;background:#0a0e12;border-radius:14px;padding:20px;box-shadow:0 12px 35px #0008}
+.logo{font-size:22px;letter-spacing:3px;color:#fff}.meta{font-size:10px;color:#72808b;margin-top:8px}.status{font-size:10px;color:#66e19a;margin-top:14px}
+.lock{max-width:540px;margin:70px auto}.panel{border:1px solid #27313a;background:#0a0e12;border-radius:14px;padding:22px}
+.label{font-size:10px;color:#82909a}.key{width:100%;height:54px;margin-top:12px;border-radius:10px;border:1px solid #3b4852;background:#05070a;color:#fff;padding:0 14px;font:15px monospace;outline:0}.key:focus{border-color:#66e19a}
+.err{height:24px;color:#ff5964;font-size:10px;padding-top:10px}.hint{font-size:9px;color:#65717b;margin-top:12px}
+#archive{display:none;margin-top:16px}.access{border:1px solid #315c43;background:#0a1710;color:#66e19a;border-radius:10px;padding:13px;font-size:10px}
+.grid{display:grid;grid-template-columns:260px 1fr;margin-top:12px;border:1px solid #27313a;border-radius:12px;overflow:hidden;background:#080b0f}.tree{padding:12px;border-right:1px solid #27313a}.viewer{padding:18px;min-height:480px}.folder{color:#66e19a;padding:10px 6px;font-size:11px}.file{padding:8px 8px 8px 22px;color:#cbd5dd;font-size:11px;cursor:pointer;border-radius:6px}.file:hover{background:#121920}.path{font-size:10px;color:#68757f;border-bottom:1px solid #27313a;padding-bottom:12px}.viewer pre{white-space:pre-wrap;font:12px/1.7 monospace;color:#ccd6de}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.tree{border-right:0;border-bottom:1px solid #27313a}.viewer{min-height:350px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="logo">E-17 SECURE ARCHIVE</div>
+<div class="meta">FORENSIC STORAGE MEDIA // CLASSIFICATION: BLACK // LOCAL ARCHIVE</div>
+<div id="status" class="status">● DEVICE LOCKED</div>
+</div>
+
+<div id="lock" class="lock">
+<div class="panel">
+<div class="label">AUTHENTICATION REQUIRED</div>
+<input id="key" class="key" type="password" autocomplete="off" placeholder="Enter archive key">
+<div id="err" class="err"></div>
+<div class="hint">Enter the complete archive key. The archive will mount automatically.</div>
+</div>
+</div>
+
+<div id="archive">
+<div class="access">● ACCESS GRANTED — ARCHIVE MOUNTED — READ ONLY</div>
+<div class="grid"><div id="tree" class="tree"></div>
+<div class="viewer"><div id="path" class="path">/E-17/ Select a file</div><pre id="content">Archive decrypted. Select a recovered file.</pre></div></div>
+</div>
+</div>
+
+<script>
+const PASSWORD="E17-SECURITY-ARCHIVE-8F3A-2026";
+const DATA={
+"00_SYSTEM/BOOT_NOTICE.txt":"E-17 SECURE ARCHIVE\\nAUTHENTICATION REQUIRED\\nDECRYPTED DATA: 37%\\nREMAINING SECTORS: LOCKED\\n",
+"01_PROJECT/ECLIPSE_OVERVIEW.txt":"PROJECT ECLIPSE\\nCLASSIFICATION: BLACK\\n\\nEclipse is a distributed dependency architecture built around capital, information and influence.\\nNo single company or person represents the complete structure.\\n",
+"02_FINANCE/H47_ROUTE.txt":"FINANCIAL ROUTE / PARTIAL\\n\\nH-47 LOGISTICS\\n  -> MERIDIAN PROPERTY GROUP\\n  -> NORTHSTAR CAPITAL\\n  -> HALE FOUNDATION\\n\\nIndividual routing data remains restricted.\\n",
+"03_SUBJECTS/SUBJECT_08.txt":"SUBJECT GROUP 08\\n\\n01 RAAD — coordination\\n02 NOAH — analysis\\n03 YAZAN — technical\\n04 SAIF — surveillance\\n05 HAMZA — field operations\\n06 KAIN — operations\\n07 MALIK — logistics\\n08 [REDACTED]\\n\\nDIRECTIVE: OBSERVE. DO NOT ELIMINATE.\\n",
+"04_HALE/VICTOR_HALE.txt":"VICTOR HALE\\nSTATUS: CONTROLLED ASSET\\nKNOWLEDGE: LIMITED\\n\\nHale is not classified as an operative.\\n",
+"05_CROSS/DANIEL_CROSS.txt":"DANIEL CROSS\\nPOSITION: ACCOUNTING ANALYST\\nSTATUS: TERMINATED\\n\\nCross detected irregular financial relationships before disappearing.\\n",
+"06_INCIDENTS/E17_EXTRACTION.txt":"INCIDENT E-17\\n\\nObjective: controlled removal of E-17 from secure custody.\\nPurpose: observation of independent actors.\\nRESULT: PHASE ONE SUCCESSFUL.\\n",
+"07_OBSERVATION/PHASE_ONE.txt":"PHASE ONE\\n\\nDAY 21 — H-47 identified.\\nDAY 37 — Hale/security relationship identified.\\nDAY 44 — partial ECLIPSE structure identified.\\n\\nASSESSMENT: PASS\\n",
+"08_BLACK_VEIL/INDEX.txt":"BLACK VEIL\\nCLASSIFICATION: OMEGA\\n\\nA crisis architecture designed around uncertainty and dependency.\\nFULL IMPLEMENTATION DATA: LOCKED\\n",
+"09_PHASE_TWO/NOTICE.txt":"PHASE TWO\\nSTATUS: ACTIVE\\n\\nPRIMARY OBJECTIVE: RETURN SUBJECT GROUP 08 TO CITY ONE.\\nDIRECTIVE: DO NOT ELIMINATE SUBJECT GROUP 08.\\n",
+"10_FINAL/READ_AFTER_PHASE_ONE.txt":"FINAL MESSAGE\\n\\nYou believe you stole E-17.\\nYou did not.\\n\\nPHASE TWO HAS BEGUN.\\n\\nEND OF AVAILABLE ARCHIVE\\n"
+};
+
+function mount(){
+ const tree=document.getElementById("tree"); tree.innerHTML="";
+ const groups={};
+ Object.keys(DATA).forEach(p=>{const f=p.split("/")[0];(groups[f]??=[]).push(p)});
+ Object.entries(groups).forEach(([folder,paths])=>{
+  const h=document.createElement("div");h.className="folder";h.textContent="▾ "+folder;tree.appendChild(h);
+  paths.forEach(p=>{const el=document.createElement("div");el.className="file";el.textContent="▣ "+p.split("/").slice(1).join("/");el.onclick=()=>openFile(p);tree.appendChild(el)})
+ })
+}
+function openFile(p){document.getElementById("path").textContent="/E-17/"+p;document.getElementById("content").textContent=DATA[p]}
+function check(){
+ const v=document.getElementById("key").value.trim(),e=document.getElementById("err");
+ if(v===PASSWORD){
+  document.getElementById("lock").style.display="none";
+  document.getElementById("archive").style.display="block";
+  document.getElementById("status").textContent="● ARCHIVE MOUNTED";
+  mount();
+ } else if(v.length>=PASSWORD.length){e.textContent="ACCESS DENIED — INVALID ARCHIVE KEY"}
+}
+document.getElementById("key").addEventListener("input",check);
+document.getElementById("key").addEventListener("change",check);
+</script>
+</body>
+</html>
